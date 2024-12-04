@@ -59,7 +59,6 @@ def battle_caveman(player):
 
 
 if __name__ == "__main__":
-    # Create the player character
     player_name = input("Enter your character's name: ")
     player = PlayerCharacter(player_name, 100, 10)
 
