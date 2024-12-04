@@ -20,6 +20,10 @@ def start_game():
     print("As you munch on the pie, you remember the news and say...");
     time.sleep(1);
     print("Did the news say boysenberry?")
+    time.sleep(3);
+    print("Meh. Should be fine.");
+    
+
 
 
 
