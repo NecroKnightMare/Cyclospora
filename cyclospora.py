@@ -17,7 +17,9 @@ def start_game():
     time.sleep(2);
     print("Well it's not the worst thing I've eaten and I need to at least eat it to be respectful");
     time.sleep(2);
-    print("As you munch on the pie )
+    print("As you munch on the pie, you remember the news and say...");
+    time.sleep(1);
+    print("Did the news say boysenberry?")
 
 
 
