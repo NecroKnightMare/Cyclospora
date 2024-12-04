@@ -1,4 +1,24 @@
 import random
+import time
+import sleep
+
+def start_game():
+    print("Cyclospora");
+    time.sleep(3);
+    print("In recent events, there has been an outbreak of parasitic contamination of our local berries including; blueberries, raspberries, blackberries and strawberries to name a few");
+    time.sleep(3);
+    print("Ugh, I'm starving....");
+    time.sleep(3);
+    print("What's in the fridge?")
+    time.sleep(3);
+    print("You walk into the kitchen and open the fridge");
+    time.sleep(1);
+    print("You see there's nothing to prepare for breakfast, other than a boysenberry pie your neighbor brought over, that looked older tha a week old");
+    time.sleep(2);
+    print("Well it's not the worst thing I've eaten and I need to at least eat it to be respectful");
+    time.sleep(2);
+    print("As you munch on the pie )
+
 
 
 # class Creature:
