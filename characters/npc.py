@@ -1,3 +1,6 @@
+from creature import Creature
+import random
+from weapon import Weapon
 class NPC(Creature):
     """
     Represents a non-player character in the RPG game.
@@ -21,3 +24,24 @@ class NPC(Creature):
     npc6 = NPC(name="Alien", health=100, defense=50)
     
     super().__init__(name, hp, df)
+
+    class Caveman(NPC):
+        """
+        Represents a Caveman, a primitive and potentially hostile human.
+        """
+
+        def __init__(self, name="Caveman", hp=20, ac=5):
+            """
+            Initializes a Caveman instance.
+            """
+            super().__init__(name, hp, ac)
+
+        def attack(self, target):
+            """
+            Cavemen have a chance to throw rocks for ranged damage.
+            """
+            if random.random() < 0.5:  # 50% chance to throw a rock
+                super().attack(target, Weapon("Rock", "ranged", 8, range=3, accuracy=0.6))
+                print(f"{self.name} throws a rock at {target.name}!")
+            else:  # Otherwise, use club for melee attack
+                super().attack(target, Weapon("Club", "melee", 6))

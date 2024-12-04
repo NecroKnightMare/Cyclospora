@@ -2,6 +2,7 @@ import random
 from weapon import Weapon
 from weapon import club
 from player import PlayerCharacter
+from npc import Caveman
 
 
 def battle(player, enemy):
