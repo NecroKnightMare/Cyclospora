@@ -48,7 +48,7 @@ def start_game():
         time.sleep(3);
         print("Oww, my back...");
         time.sleep(2);
-        print("(As you start adjusting yourself to your surroundings, You see foliage and start hearing loud noises you feel like you've heard in a movie
+        print("(As you start adjusting yourself to your surroundings, You see foliage and start hearing loud noises you feel like you've heard in a movie)")
         time.sleep(3);
         print("What the....");
         time.sleep(1);
@@ -110,7 +110,85 @@ def start_game():
         time.sleep(3);
         print("(You're shocked, and start explaining that you mean no harm, but fail )");
         time.sleep(4);
-        print("")
+        print("(Some person you can only describe as a stereotypical ninja approaches you with sword drawn.)")
+        battle_ninja();  # Ninja battle here
+
+        print("(You quickly pick the knife back up and sheathe it and apologize profusely to the lady and wander away from the body you just left in the street.)");
+        time.sleep(3);
+        print("(After panic walking away from the murder you just commited. You find another vender and ask about a nearby inn. She seems to understand and points you in the direction of an Inn)");
+        time.sleep(3);
+        print("(You thank her and start walking towards the Inn, as you walk you begin to feel light-headed and blackout again.)"); 
+        time.sleep(4);
+        print("(You awake and look around, you notice a city-scape bombed to a point it resembled rubble more than a city.)");
+        time.sleep(3);
+        print("Halt! You there!");
+        time.sleep(2);
+        print("(You stop and slowly turn around)");
+        time.sleep(2);
+        print("(You are face to face with a Nazi soldier, obviously there isn't much to say at this point, you look to your right and find a discarded rifle, pick it up and point)");
+
+        battle_nazi();  # Nazi battle here
+
+        print("(Well, that one doesn't feel as bad as the previous ones. That was a choice.)");
+        time.sleep(2);
+        print("(You begin to look around, you debate just laying down and waiting for the next one to happen. You're just guessing at this point.)");
+        time.sleep(2);
+        print("(You lay down to go to sleep)");
+        time.sleep(3);
+        print("(You start to feel light headed)");
+        time.sleep(2);
+        print("Here we go again...");
+        time.sleep(2);
+
+    def Travel_ModernEra():
+        print("(You awaken to the sound of cars and people talking)");
+        time.sleep(3);
+        print("(You look around and realize you're in a modern city)");
+        time.sleep(2);
+        print("Where am I now?");
+        time.sleep(2);
+        print("(You see a soldier patrolling the street)");
+        time.sleep(2);
+        print("Hey, you! Stop right there!");
+        time.sleep(3)
+        print("(You realize you're just a dude holding a bunch of weapons\
+            in the middle of what appears to be the United Kingdom.\
+            They don't like guns and obviously do not like you right now.)"
+
+        battle_modern();
+
+        print("Well, guess I'm just a murderer now with some kind of berry monster helping me commit more crimes in various ages.");
+        time.sleep(3)
+        print("(You begin to wander off attempting to hide somewhere not in the middle of the street. You find yourself wandering down an alley.)")
+        time.sleep(3)
+        print("(At the end of the alley, a bright light suddenly bursts out of the wall. It resembles a portal that you would see in Star Trek or something else sci-fi.)");
+        time.sleep(3);
+        print("Well guess I really don't have much to lose now.")
+        time.sleep(3)
+        print("(You reload your rifle, take a look around and walk through the portal.)"
+
+    def Travel_AlienWorld():
+        print("(You step through the portal and find yourself on an alien planet)");
+        time.sleep(3);
+        print("(The landscape is strange and unfamiliar)");
+        time.sleep(2);
+        print("(You see an Alien approaching)");
+        time.sleep(2);
+
+        battle_alien();  # Alien boss battle here
+
+        # ... (Ending sequence thats super cool with blood and victory)
+
+
+    # Call the travel functions
+    Travel_StoneAge()
+    Travel_CastleCamelot()
+    Travel_RedDistrict()
+    Travel_ModernEra()
+    Travel_AlienWorld()
+
+if __name__ == "__main__":
+    start_game()
 
     
 
