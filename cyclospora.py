@@ -2,6 +2,12 @@
 import random
 import time
 import sleep
+from battle import battle_caveman
+from battle import battle_knight
+from battle import battle_modern
+from battle import battle_nazi
+from battle import battle_ninja
+from battle import battle_alien
 
 def start_game():
     print("Cyclospora");
@@ -23,6 +29,89 @@ def start_game():
     print("Did the news say boysenberry?")
     time.sleep(3);
     print("Meh. Should be fine.");
+    time.sleep(2);
+    print("You've eaten the pie");
+    time.sleep(2);
+    print("That wasn't too bad");
+    time.sleep(2);
+    print("Ugh, spoke too soon...");
+    time.sleep(2);
+    print("(Stomach starts bubbling and hurting)");
+    time.sleep(2);
+    print("ugh...I think I'll sleep it off...");
+    time.sleep(2);
+    print("You lay down");
+    time.sleep(3);
+
+    def Travel_StoneAge():
+        print("(There's an unfamiliar cold hard surface that you knew couldn't be you're bed)");
+        time.sleep(3);
+        print("Oww, my back...");
+        time.sleep(2);
+        print("(As you start adjusting yourself to your surroundings, You see foliage and start hearing loud noises you feel like you've heard in a movie
+        time.sleep(3);
+        print("What the....");
+        time.sleep(1);
+        print("(You shoot up and start scrambling around)");
+        time.sleep(2);
+        print("How did I get here?!");
+        time.sleep(3);
+        print("Am I dreaming?");
+        time.sleep(2);
+        print("(As you look around you see what you believe to be a man)");
+        time.sleep(3);
+        print("Excuse Me!");
+        time.sleep(2);
+        print("(He notices you and starts sprinting with explosive power towards you");
+
+        battle_caveman();
+
+    def Travel_CastleCamelot():
+        print("(Your head is pounding and your arms and legs are aching)");
+        time(3);
+        print("Damn it...(You hold your head in your hands)");
+        time.sleep(3);
+        print("(As you lay in pain from the unexpected battle, the sound of metal clanging together gets louder and louder)")
+        time.sleep(5);
+        print("HARK!! Who goes there?!");
+        time.sleep(2);
+        print("(You hurriedly stand up and adrenaline courses through you're veins. As you look around, you notice your in some medeival era)");
+        time.sleep(5);
+        print("Please, not again");
+        
+        battle_knight();
+        time.sleep(3);
+
+    def Travel_RedDistrict();
+        time.sleep(2);
+        print("WHY IS THIS HAPPENING TO ME?!");
+        time.sleep(2);
+        print("(You start trembling with anger and feelings of helplessness...)");
+        time.sleep(3);
+        print("Where am I now?!");
+        time.sleep(2);
+        print("(A Geisha in the midst of a crowd starts walking , almost like a parade)");
+        time.sleep(3);
+        print("(The sun setting, you realize it's getting dark out)");
+        time.sleep(2);
+        print("Crap, gotta find somewhere to sleep");
+        time.sleep(2);
+        print("(You wonder the district and see food vendors and the area becoming livelier)");
+        time.sleep(4);
+        print("(You're stomach still hurts from that pie you ate. But you feel an insatuated hunger)");
+        time.sleep(5);
+        print("Can I get some food please?(You ask a vendor, she clearly doesn't understand you)");
+        time.sleep(3);
+        print("Well damn...");
+        time.sleep(2);
+        print("Well maybe if I...(You start to rummage your pockets and pull out your wallet, with your wallet drops a pocket knife)");
+        time.sleep(6);
+        print("I had that with me too? (You unsheath it and the vendor yells)");
+        time.sleep(3);
+        print("(You're shocked, and start explaining that you mean no harm, but fail )");
+        time.sleep(4);
+        print("")
+
     
 
 
