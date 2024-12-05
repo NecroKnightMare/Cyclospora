@@ -7,6 +7,7 @@ from battle import battle_modern
 from battle import battle_nazi
 from battle import battle_ninja
 from battle import battle_alien
+from characters.player import PlayerCharacter
 
 def start_game():
     print("Cyclospora");
@@ -63,7 +64,7 @@ def start_game():
         time.sleep(2);
         print("(He notices you and starts sprinting with explosive power towards you");
 
-        battle_caveman();
+        battle_caveman(player);
 
     def Travel_CastleCamelot():
         print("(Your head is pounding and your arms and legs are aching)");
@@ -78,7 +79,7 @@ def start_game():
         time.sleep(5);
         print("Please, not again");
         
-        battle_knight();
+        battle_knight(player);
         time.sleep(3);
 
     def Travel_RedDistrict():
@@ -110,7 +111,7 @@ def start_game():
         print("(You're shocked, and start explaining that you mean no harm, but fail )");
         time.sleep(4);
         print("(Some person you can only describe as a stereotypical ninja approaches you with sword drawn.)")
-        battle_ninja();  # Ninja battle here
+        battle_ninja(player);  # Ninja battle here
 
         print("(You quickly pick the knife back up and sheathe it and apologize profusely to the lady and wander away from the body you just left in the street.)");
         time.sleep(3);
@@ -126,7 +127,7 @@ def start_game():
         time.sleep(2);
         print("(You are face to face with a Nazi soldier, obviously there isn't much to say at this point, you look to your right and find a discarded rifle, pick it up and point)");
 
-        battle_nazi();  # Nazi battle here
+        battle_nazi(player);  # Nazi battle here
 
         print("(Well, that one doesn't feel as bad as the previous ones. That was a choice.)");
         time.sleep(2);
@@ -152,7 +153,7 @@ def start_game():
         time.sleep(3)
         print("(You realize you're just a dude holding a bunch of weapons in the middle of what appears to be the United Kingdom. They don't like guns and obviously do not like you right now.)")
 
-        battle_modern();
+        battle_modern(player);
 
         print("Well, guess I'm just a murderer now with some kind of berry monster helping me commit more crimes in various ages.");
         time.sleep(3)
@@ -172,7 +173,7 @@ def start_game():
         print("(You see an Alien approaching)");
         time.sleep(2);
 
-        battle_alien();  # Alien boss battle here
+        battle_alien(player);  # Alien boss battle here
 
         # ... (Ending sequence thats super cool with blood and victory)
 

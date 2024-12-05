@@ -1,8 +1,7 @@
 import random
-from weapon import Weapon
-from weapon import club, sword, m16, ray_gun  # Import the ray gun
-from player import PlayerCharacter
-from npc import Alien
+from items.weapon import club, sword, m16, ray_gun  # Import the ray gun
+from characters.player import PlayerCharacter
+from characters.npc import Alien
 
 
 def battle_alien(player):

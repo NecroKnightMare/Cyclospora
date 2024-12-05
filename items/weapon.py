@@ -55,12 +55,12 @@ range=5,
 accuracy=0.75
 )
 
-musket = Weapon(
-    name="Musket",
+m16 = Weapon(
+    name="M16",
     damage_type="ballistic",
-    damage=15,
-    range=10,
-    accuracy=0.6,
+    damage=25,
+    range=30,
+    accuracy=0.8,
     crit_chance=0.2,
 )
 

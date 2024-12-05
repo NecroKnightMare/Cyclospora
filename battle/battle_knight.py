@@ -1,8 +1,7 @@
 import random
-from weapon import Weapon
-from weapon import club, sword
-from player import PlayerCharacter
-from npc import Knight
+from items.weapon import club, sword
+from characters.player import PlayerCharacter
+from characters.npc import Knight
 
 
 def battle_knight(player):

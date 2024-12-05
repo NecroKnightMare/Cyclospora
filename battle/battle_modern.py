@@ -1,8 +1,7 @@
 import random
-from weapon import Weapon
-from weapon import club, sword, m16  # Import the M16
-from player import PlayerCharacter
-from npc import British_Soldier
+from items.weapon import club, sword, m16
+from characters.player import PlayerCharacter
+from characters.npc import British_Soldier
 
 
 def battle_british_soldier(player):
