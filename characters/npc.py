@@ -150,3 +150,4 @@ class NPC(Creature):
                 print(f"{self.name} shoots a raygun blast at {target.name}!")
             else:  # Otherwise, use Plasma sword for melee attack
                 super().attack(target, Weapon("Plasma sword", "melee", 15))
+                
