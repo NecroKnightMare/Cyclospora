@@ -4,7 +4,7 @@ from characters.player import PlayerCharacter
 from characters.npc import Nazi_Soldier
 
 
-def battle_nazi_soldier(player):
+def battle_nazi(player):
     """
     Simulates a battle between the player and a Nazi Soldier.
     The player is granted an M1 Garand for this battle.
