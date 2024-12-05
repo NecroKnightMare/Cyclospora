@@ -1,6 +1,7 @@
 import random
 import time
 import sleep
+from battle import battle_caveman
 
 def start_game():
     print("Cyclospora");
@@ -22,6 +23,46 @@ def start_game():
     print("Did the news say boysenberry?")
     time.sleep(3);
     print("Meh. Should be fine.");
+    time.sleep(2);
+    print("You've eaten the pie");
+    time.sleep(2);
+    print("That wasn't too bad");
+    time.sleep(2);
+    print("Ugh, spoke too soon...");
+    time.sleep(2);
+    print("(Stomach starts bubbling and hurting)");
+    time.sleep(2);
+    print("ugh...I think I'll sleep it off...");
+    time.sleep(2);
+    print("You lay down");
+    time.sleep(3);
+
+    def Travel_StoneAge():
+        print("(There's an unfamiliar cold hard surface that you knew couldn't be you're bed)");
+        time.sleep(3);
+        print("Oww, my back...");
+        time.sleep(2);
+        print("(As you start adjusting yourself to your surroundings, You see foliage and start hearing loud noises you feel like you've heard in a movie
+        time.sleep(3);
+        print("What the....");
+        time.sleep(1);
+        print("(You shoot up and start scrambling around)");
+        time.sleep(2);
+        print("How did I get here?!");
+        time.sleep(3);
+        print("Am I dreaming?");
+        time.sleep(2);
+        print("(As you look around you see what you believe to be a man)");
+        time.sleep(3);
+        print("Excuse Me!");
+        time.sleep(2);
+        print("(He notices you and starts sprinting with explosive power towards you");
+
+        battle_caveman();
+
+    
+
+
     
 
 
