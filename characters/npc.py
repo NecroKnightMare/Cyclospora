@@ -78,7 +78,7 @@ class NPC(Creature):
             if random.random() < 0.5:  # 50% chance to throw a rock
                 super().attack(target, Weapon("Shuriken", "ranged", 6, range=5, accuracy=4))
                 print(f"{self.name} throws a rock at {target.name}!")
-            else:  # Otherwise, use club for melee attack
+            else:  # Otherwise, use Tanto for melee attack
                 super().attack(target, Weapon("Tanto", "melee", 8))
 
     class British_Soldier(NPC):
