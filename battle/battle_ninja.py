@@ -1,8 +1,7 @@
 import random
-from weapon import Weapon
-from weapon import club, sword, bow  # Assuming the player still has these
-from player import PlayerCharacter
-from npc import Ninja
+from items.weapon import club, sword, bow
+from characters.player import PlayerCharacter
+from characters.npc import Ninja
 
 
 def battle_ninja(player):

@@ -1,6 +1,6 @@
-from creature import Creature
+from .creature import Creature
 import random
-from weapon import Weapon
+from items.weapon import Weapon
 class NPC(Creature):
     """
     Represents a non-player character in the RPG game.
@@ -16,9 +16,10 @@ class NPC(Creature):
             df (int): The NPC's defense points.
         """
 
-    super().__init__(name, hp, ac)
+        super().__init__(name, hp, ac)
 
-    class Caveman(NPC):
+
+class Caveman(NPC):
         """
         Represents a Caveman, a primitive and potentially hostile human.
         """
@@ -39,7 +40,7 @@ class NPC(Creature):
             else:  # Otherwise, use club for melee attack
                 super().attack(target, Weapon("Club", "melee", 6))
 
-    class Knight(NPC):
+class Knight(NPC):
         """
         Represents a Knight, an Honourable and potentially hostile human.
         """
@@ -60,7 +61,7 @@ class NPC(Creature):
             else:  # Otherwise, use Longsword for melee attack
                 super().attack(target, Weapon("Longsword", "melee", 10))
 
-    class Ninja(NPC):
+class Ninja(NPC):
         """
         Represents a Ninja, a stealthy and hostile human.
         """
@@ -81,7 +82,7 @@ class NPC(Creature):
             else:  # Otherwise, use Tanto for melee attack
                 super().attack(target, Weapon("Tanto", "melee", 8))
 
-    class British_Soldier(NPC):
+class British_Soldier(NPC):
         """
         Represents a British Soldier, a Battle smart and hostile human.
         """
@@ -96,13 +97,13 @@ class NPC(Creature):
             """
             British soldiers have a chance to shoot their musket for ranged damage.
             """
-            if random.random() < 0.5:  # 50% chance to shoot musket
-                super().attack(target, Weapon("Rock", "ranged", 9, range=7, accuracy=3))
+            if random.random() < 0.7:  # 70% chance to shoot rifle
+                super().attack(target, Weapon("SA80", "ranged", 9, range=25, accuracy=9))
                 print(f"{self.name} shoots at {target.name}!")
             else:  # Otherwise, use club for melee attack
                 super().attack(target, Weapon("Bayonett", "melee", 8))
 
-    class Nazi_Soldier(NPC):
+class Nazi_Soldier(NPC):
         """
         Represents a Caveman, a primitive and hostile human.
         """
@@ -118,12 +119,12 @@ class NPC(Creature):
             NAzi Soldiers have a chance to shoot their pistol for ranged damage.
             """
             if random.random() < 0.5:  # 50% chance to shoot with their Luger
-                super().attack(target, Weapon("Luger ", "ranged", 8, range=9, accuracy=3.5))
+                super().attack(target, Weapon("Luger ", "ranged", 8, range=7, accuracy=3.5))
                 print(f"{self.name} throws a rock at {target.name}!")
             else:  # Otherwise, use  for melee attack
                 super().attack(target, Weapon("Combat Knife", "melee", 7))
 
-    class Alien(NPC):
+class Alien(NPC):
         """
         Represents an Alien, a genius and hostile lifeform.
         """
@@ -144,7 +145,7 @@ class NPC(Creature):
             else:  # Otherwise, use Plasma sword for melee attack
                 super().attack(target, Weapon("Plasma sword", "melee", 15))
 
-    def health_roll(self, boost_amount, debuff_amount):
+def health_roll(self, boost_amount, debuff_amount):
         """
         50/50 chance to apply a health boost or debuff.
 

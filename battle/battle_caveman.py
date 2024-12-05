@@ -1,7 +1,7 @@
 import random
-from weapon import club
-from player import PlayerCharacter
-from npc import Caveman
+from items.weapon import club
+from characters.player import PlayerCharacter
+from characters.npc import Caveman
 
 
 def battle_caveman(player):
