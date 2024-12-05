@@ -157,5 +157,5 @@ class NPC(Creature):
             print(f"{self.name}'s health increased by {boost_amount}. Current Health: {self.hp}")
         else:
             self.hp -= debuff_amount
-            self.hp = max(0, self.health)
+            self.hp = max(0, self.hp)
             print(f"{self.name}'s health decreased by {debuff_amount}. Current Health: {self.hp}")
