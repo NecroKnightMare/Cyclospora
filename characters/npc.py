@@ -16,13 +16,6 @@ class NPC(Creature):
             df (int): The NPC's defense points.
         """
 
-    npc1 = NPC(name="Caveman", health=20, defense=5)
-    npc2 = NPC(name="knight", health=30, defense=10)
-    npc3 = NPC(name="Ninja", health=35, defense=15)
-    npc4 = NPC(name="British Soldier", health=40, defense=20)
-    npc5 = NPC(name="Nazi Soldier", health=50, defense=25)
-    npc6 = NPC(name="Alien", health=100, defense=50)
-    
     super().__init__(name, hp, ac)
 
     class Caveman(NPC):
@@ -150,4 +143,19 @@ class NPC(Creature):
                 print(f"{self.name} shoots a raygun blast at {target.name}!")
             else:  # Otherwise, use Plasma sword for melee attack
                 super().attack(target, Weapon("Plasma sword", "melee", 15))
-                
+
+    def health_roll(self, boost_amount, debuff_amount):
+        """
+        50/50 chance to apply a health boost or debuff.
+
+        :param boost_amount: Amount to increase health on a boost.
+        :param debuff_amount: Amount to decrease health on a debuff.
+        """
+         
+        if random.choice([True, False]):
+            self.hp += boost_amount
+            print(f"{self.name}'s health increased by {boost_amount}. Current Health: {self.hp}")
+        else:
+            self.hp -= debuff_amount
+            self.hp = max(0, self.health)
+            print(f"{self.name}'s health decreased by {debuff_amount}. Current Health: {self.hp}")
