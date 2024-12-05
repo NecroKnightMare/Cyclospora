@@ -103,8 +103,8 @@ class NPC(Creature):
             """
             British soldiers have a chance to shoot their musket for ranged damage.
             """
-            if random.random() < 0.5:  # 50% chance to shoot musket
-                super().attack(target, Weapon("Rock", "ranged", 9, range=7, accuracy=3))
+            if random.random() < 0.7:  # 70% chance to shoot rifle
+                super().attack(target, Weapon("SA80", "ranged", 9, range=25, accuracy=9))
                 print(f"{self.name} shoots at {target.name}!")
             else:  # Otherwise, use club for melee attack
                 super().attack(target, Weapon("Bayonett", "melee", 8))
@@ -125,7 +125,7 @@ class NPC(Creature):
             NAzi Soldiers have a chance to shoot their pistol for ranged damage.
             """
             if random.random() < 0.5:  # 50% chance to shoot with their Luger
-                super().attack(target, Weapon("Luger ", "ranged", 8, range=9, accuracy=3.5))
+                super().attack(target, Weapon("Luger ", "ranged", 8, range=7, accuracy=3.5))
                 print(f"{self.name} throws a rock at {target.name}!")
             else:  # Otherwise, use  for melee attack
                 super().attack(target, Weapon("Combat Knife", "melee", 7))
