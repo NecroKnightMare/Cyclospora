@@ -15,7 +15,8 @@ class NPC(Creature):
             hp (int): The NPC's hit points.
             df (int): The NPC's defense points.
         """
-super().__init__(name, hp, ac)
+
+        super().__init__(name, hp, ac)
 
 
 class Caveman(NPC):
