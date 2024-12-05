@@ -69,7 +69,7 @@ def start_game():
 
     def Travel_CastleCamelot():
         print("(Your head is pounding and your arms and legs are aching)");
-        time(3);
+        time.sleep(3);
         print("Damn it...(You hold your head in your hands)");
         time.sleep(3);
         print("(As you lay in pain from the unexpected battle, the sound of metal clanging together gets louder and louder)")
