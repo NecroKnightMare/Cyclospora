@@ -1,6 +1,6 @@
-from creature import Creature
+from .creature import Creature
 import random
-from weapon import Weapon
+from items.weapon import Weapon
 class NPC(Creature):
     """
     Represents a non-player character in the RPG game.
@@ -15,10 +15,10 @@ class NPC(Creature):
             hp (int): The NPC's hit points.
             df (int): The NPC's defense points.
         """
+super().__init__(name, hp, ac)
 
-    super().__init__(name, hp, ac)
 
-    class Caveman(NPC):
+class Caveman(NPC):
         """
         Represents a Caveman, a primitive and potentially hostile human.
         """
@@ -39,7 +39,7 @@ class NPC(Creature):
             else:  # Otherwise, use club for melee attack
                 super().attack(target, Weapon("Club", "melee", 6))
 
-    class Knight(NPC):
+class Knight(NPC):
         """
         Represents a Knight, an Honourable and potentially hostile human.
         """
@@ -60,7 +60,7 @@ class NPC(Creature):
             else:  # Otherwise, use Longsword for melee attack
                 super().attack(target, Weapon("Longsword", "melee", 10))
 
-    class Ninja(NPC):
+class Ninja(NPC):
         """
         Represents a Ninja, a stealthy and hostile human.
         """
@@ -81,7 +81,7 @@ class NPC(Creature):
             else:  # Otherwise, use Tanto for melee attack
                 super().attack(target, Weapon("Tanto", "melee", 8))
 
-    class British_Soldier(NPC):
+class British_Soldier(NPC):
         """
         Represents a British Soldier, a Battle smart and hostile human.
         """
@@ -102,7 +102,7 @@ class NPC(Creature):
             else:  # Otherwise, use club for melee attack
                 super().attack(target, Weapon("Bayonett", "melee", 8))
 
-    class Nazi_Soldier(NPC):
+class Nazi_Soldier(NPC):
         """
         Represents a Caveman, a primitive and hostile human.
         """
@@ -123,7 +123,7 @@ class NPC(Creature):
             else:  # Otherwise, use  for melee attack
                 super().attack(target, Weapon("Combat Knife", "melee", 7))
 
-    class Alien(NPC):
+class Alien(NPC):
         """
         Represents an Alien, a genius and hostile lifeform.
         """
@@ -144,7 +144,7 @@ class NPC(Creature):
             else:  # Otherwise, use Plasma sword for melee attack
                 super().attack(target, Weapon("Plasma sword", "melee", 15))
 
-    def health_roll(self, boost_amount, debuff_amount):
+def health_roll(self, boost_amount, debuff_amount):
         """
         50/50 chance to apply a health boost or debuff.
 

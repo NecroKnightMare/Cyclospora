@@ -1,7 +1,6 @@
 
 import random
 import time
-import sleep
 from battle import battle_caveman
 from battle import battle_knight
 from battle import battle_modern
@@ -82,7 +81,7 @@ def start_game():
         battle_knight();
         time.sleep(3);
 
-    def Travel_RedDistrict();
+    def Travel_RedDistrict():
         time.sleep(2);
         print("WHY IS THIS HAPPENING TO ME?!");
         time.sleep(2);
@@ -151,9 +150,7 @@ def start_game():
         time.sleep(2);
         print("Hey, you! Stop right there!");
         time.sleep(3)
-        print("(You realize you're just a dude holding a bunch of weapons\
-            in the middle of what appears to be the United Kingdom.\
-            They don't like guns and obviously do not like you right now.)"
+        print("(You realize you're just a dude holding a bunch of weapons in the middle of what appears to be the United Kingdom. They don't like guns and obviously do not like you right now.)")
 
         battle_modern();
 
@@ -165,7 +162,7 @@ def start_game():
         time.sleep(3);
         print("Well guess I really don't have much to lose now.")
         time.sleep(3)
-        print("(You reload your rifle, take a look around and walk through the portal.)"
+        print("(You reload your rifle, take a look around and walk through the portal.)")
 
     def Travel_AlienWorld():
         print("(You step through the portal and find yourself on an alien planet)");

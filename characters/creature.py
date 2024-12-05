@@ -1,3 +1,5 @@
+import random
+
 class Creature:
     """
     Represents a generic creature in the RPG game.
