@@ -106,11 +106,11 @@ def start_game():
         time.sleep(3);
         print("Well damn...");
         time.sleep(2);
-        print("Well maybe if I...(You start to rummage your pockets and pull out your wallet, with your wallet drops a pocket knife)");
+        print("Well maybe if I...(You start to rummage your pockets and pull out your wallet. The vendor starts to panic)");
         time.sleep(6);
-        print("I had that with me too? (You unsheath it and the vendor yells)");
+        print("(You gaze to see what she's fretting about. As you try to see where your gaze ends, you realize it's the weapons you've collected along the way. )");
         time.sleep(3);
-        print("(You're shocked, and start explaining that you mean no harm, but fail )");
+        print("(You're shocked, and start explaining that you mean no harm, but fail)");
         time.sleep(4);
         print("(Some person you can only describe as a stereotypical ninja approaches you with sword drawn.)")
 
