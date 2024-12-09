@@ -117,7 +117,7 @@ def start_game():
         player = PlayerCharacter("You", 115, 20)
         battle_ninja(player)
 
-        print("(You quickly pick the knife back up and sheathe it and apologize profusely to the lady and wander away from the body you just left in the street.)");
+        print("(You quickly put your weapon away, back up and sheathe it and apologize profusely to the lady and wander away from the body you just left in the street.)");
         time.sleep(3);
         print("(After panic walking away from the murder you just commited. You find another vender and ask about a nearby inn. She seems to understand and points you in the direction of an Inn)");
         time.sleep(3);
