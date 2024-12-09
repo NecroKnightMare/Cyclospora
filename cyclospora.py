@@ -1,4 +1,4 @@
-
+from PIL import Image
 import random
 import time
 from battle.battle_caveman import battle_caveman
@@ -10,6 +10,9 @@ from battle.battle_alien import battle_alien
 from characters.player import PlayerCharacter
 
 def start_game():
+    # filename = "image.png"
+    # with image.open(filename) as image:
+    #     width, height = image.size
     print("Cyclospora");
     #time.sleep(3);
     print("In recent events, there has been an outbreak of parasitic contamination of our local berries including; blueberries, raspberries, blackberries and strawberries to name a few");
