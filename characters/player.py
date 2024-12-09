@@ -1,3 +1,4 @@
+from .creature import Creature
 class PlayerCharacter(Creature):
     """
     Represents a player-controlled character in the RPG game.
