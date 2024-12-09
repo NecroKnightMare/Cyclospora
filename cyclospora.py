@@ -20,17 +20,17 @@ def start_game():
     time.sleep(3);
     print("You walk into the kitchen and open the fridge");
     time.sleep(1);
-    print("You see there's nothing to prepare for breakfast, other than a boysenberry pie your neighbor brought over, that looked older tha a week old");
+    print("You see there's nothing to prepare for breakfast, other than a boysenberry pie your neighbor brought over, that looked older tha a week");
     time.sleep(2);
     print("Well it's not the worst thing I've eaten and I need to at least eat it to be respectful");
     time.sleep(2);
     print("As you munch on the pie, you remember the news and say...");
     time.sleep(1);
-    print("Did the news say boysenberry?")
+    print("Did the news say boysenberry?...")
     time.sleep(3);
     print("Meh. Should be fine.");
     time.sleep(2);
-    print("You've eaten the pie");
+    print("(You've eaten the pie)");
     time.sleep(2);
     print("That wasn't too bad");
     time.sleep(2);
@@ -92,9 +92,9 @@ def start_game():
         time.sleep(3);
         print("Where am I now?!");
         time.sleep(2);
-        print("(A Geisha in the midst of a crowd starts walking , almost like a parade)");
+        print("(YOu hear a commotion to your left and see  Geisha in the midst of a crowd walking , almost like a parade)");
         time.sleep(3);
-        print("(The sun setting, you realize it's getting dark out)");
+        print("(The lights start turning on and the sun is setting, you realize it's getting dark out)");
         time.sleep(2);
         print("Crap, gotta find somewhere to sleep");
         time.sleep(2);
@@ -123,6 +123,10 @@ def start_game():
         time.sleep(3);
         print("(You thank her and start walking towards the Inn, as you walk you begin to feel light-headed and blackout again.)"); 
         time.sleep(4);
+
+        Travel_Lexington
+
+    def Travel_Lexington():
         print("(You awake and look around, you notice a city-scape bombed to a point it resembled rubble more than a city.)");
         time.sleep(3);
         print("Halt! You there!");
@@ -145,7 +149,7 @@ def start_game():
         print("Here we go again...");
         time.sleep(2);
 
-    def Travel_ModernEra():
+    def Travel_WW2():
         print("(You awaken to the sound of cars and people talking)");
         time.sleep(3);
         print("(You look around and realize you're in a modern city)");
@@ -162,14 +166,14 @@ def start_game():
         battle_british_soldier(player)
 
         print("Well, guess I'm just a murderer now with some kind of berry monster helping me commit more crimes in various ages.");
-        time.sleep(3)
-        print("(You begin to wander off attempting to hide somewhere not in the middle of the street. You find yourself wandering down an alley.)")
-        time.sleep(3)
+        time.sleep(3);
+        print("(You begin to wander off attempting to hide somewhere not in the middle of the street. You find yourself wandering down an alley.)");
+        time.sleep(3);
         print("(At the end of the alley, a bright light suddenly bursts out of the wall. It resembles a portal that you would see in Star Trek or something else sci-fi.)");
         time.sleep(3);
-        print("Well guess I really don't have much to lose now.")
-        time.sleep(3)
-        print("(You reload your rifle, take a look around and walk through the portal.)")
+        print("Well guess I really don't have much to lose now.");
+        time.sleep(3);
+        print("(You reload your rifle, take a look around and walk through the portal.)");
 
     def Travel_AlienWorld():
         print("(You step through the portal and find yourself on an alien planet)");
@@ -189,7 +193,8 @@ def start_game():
     Travel_StoneAge()
     Travel_CastleCamelot()
     Travel_RedDistrict()
-    Travel_ModernEra()
+    Travel_Lexington()
+    Travel_WW2()
     Travel_AlienWorld()
 
 if __name__ == "__main__":
