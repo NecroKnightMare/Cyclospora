@@ -2,8 +2,11 @@ import random
 from items.weapon import club, sword, m1_garand
 from characters.player import PlayerCharacter
 from characters.npc import Nazi_Soldier
+from decorators import game_over_check
+import pygame
 
 
+game_over_check
 def battle_nazi(player):
     """
     Simulates a battle between the player and a Nazi Soldier.

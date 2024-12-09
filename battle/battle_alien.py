@@ -2,6 +2,8 @@ import random
 from items.weapon import club, sword, m16, ray_gun  # Import the ray gun
 from characters.player import PlayerCharacter
 from characters.npc import Alien
+from decorators import game_over_check
+import pygame
 
 
 def battle_alien(player):
