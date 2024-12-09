@@ -8,8 +8,16 @@ from battle.battle_nazi import battle_nazi
 from battle.battle_ninja import battle_ninja
 from battle.battle_alien import battle_alien
 from characters.player import PlayerCharacter
+import pygame
 
 def start_game():
+    pygame.init()
+    pygame.mixer.init()
+    screen_width = 800  # Adjust as needed
+    screen_height = 600  # Adjust as needed
+    screen = pygame.display.set_mode((screen_width, screen_height))
+    pygame.display.set_caption("Cyclospora")
+    
     print("Cyclospora");
     #time.sleep(3);
     print("In recent events, there has been an outbreak of parasitic contamination of our local berries including; blueberries, raspberries, blackberries and strawberries to name a few");
