@@ -2,8 +2,11 @@ import random
 from items.weapon import club, sword, m16
 from characters.player import PlayerCharacter
 from characters.npc import British_Soldier
+from decorators import game_over_check
+import pygame
 
 
+@game_over_check
 def battle_british_soldier(player):
     """
     Simulates a battle between the player and a British Soldier.

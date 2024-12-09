@@ -2,13 +2,21 @@ import random
 from items.weapon import club
 from characters.player import PlayerCharacter
 from characters.npc import Caveman
+import pygame
+from decorators import game_over_check
 
-
+@game_over_check
 def battle_caveman(player):
     """
     Simulates a battle between the player and a Caveman.
     """
     enemy = Caveman()  # Create the Caveman enemy
+
+    pygame.init()
+    pygame.mixer.init()
+
+    club_hit_sound = pygame.mixer.Sound('Sounds/CyclosporaSFX/Bonk Sound Effect.mp3')
+
 
     while player.hp > 0 and enemy.hp > 0:
         # Player's turn
@@ -23,6 +31,7 @@ def battle_caveman(player):
 
         if action_choice == "1":
             player.attack(enemy, club)
+            club_hit_sound.play()
         elif action_choice == "2":
             print("You try to run away...")
             escape_chance = player.special["Luck"] * 0.1  # 10% per Luck point
