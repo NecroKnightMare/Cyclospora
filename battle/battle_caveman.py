@@ -3,8 +3,9 @@ from items.weapon import club
 from characters.player import PlayerCharacter
 from characters.npc import Caveman
 import pygame
+from decorators import game_over_check
 
-
+@game_over_check
 def battle_caveman(player):
     """
     Simulates a battle between the player and a Caveman.
