@@ -6,6 +6,7 @@ from decorators import game_over_check
 import pygame
 
 
+@game_over_check
 def battle_alien(player):
     """
     Simulates a battle between the player and an Alien boss.

@@ -6,7 +6,7 @@ from decorators import game_over_check
 import pygame
 
 
-game_over_check
+@game_over_check
 def battle_knight(player):
     """
     Simulates a battle between the player and a Knight.
