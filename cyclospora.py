@@ -41,15 +41,26 @@ def start_game():
     print("ugh...I think I'll sleep it off...");
     #time.sleep(2);
     print("You lay down");
+
+    time.sleep(3);
+    Travel_StoneAge();
+
     #time.sleep(3);
+
 
     def Travel_StoneAge():
         print("(There's an unfamiliar cold hard surface that you knew couldn't be you're bed)");
         #time.sleep(3);
         print("Oww, my back...");
+
+        time.sleep(2);
+        print("(As you start adjusting yourself to your surroundings, You see foliage and start hearing loud noises you feel like you've heard in a movie");
+        time.sleep(3);
+
         #time.sleep(2);
         print("(As you start adjusting yourself to your surroundings, You see foliage and start hearing loud noises you feel like you've heard in a movie)")
         #time.sleep(3);
+
         print("What the....");
         #time.sleep(1);
         print("(You shoot up and start scrambling around)");
