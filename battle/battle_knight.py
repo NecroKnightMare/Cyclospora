@@ -2,8 +2,12 @@ import random
 from items.weapon import club, sword
 from characters.player import PlayerCharacter
 from characters.npc import Knight
+
+from characters.npc import health_roll
+
 from decorators import game_over_check
 import pygame
+
 
 
 @game_over_check
@@ -13,7 +17,8 @@ def battle_knight(player):
     The player is granted a sword for this battle.
     """
     enemy = Knight()
-
+    health_roll()
+    
     while player.hp > 0 and enemy.hp > 0:
         # Player's turn
         print("\nPlayer's turn:")

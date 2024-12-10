@@ -2,8 +2,12 @@ import random
 from items.weapon import club, sword, bow
 from characters.player import PlayerCharacter
 from characters.npc import Ninja
+
+from characters.npc import health_roll
+
 from decorators import game_over_check
 import pygame
+
 
 
 @game_over_check
@@ -13,6 +17,7 @@ def battle_ninja(player):
     Includes consequences for failed run and negotiate attempts.
     """
     enemy = Ninja()
+    health_roll()
 
     while player.hp > 0 and enemy.hp > 0:
         # Player's turn

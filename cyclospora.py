@@ -1,4 +1,4 @@
-
+from PIL import Image
 import random
 import time
 from battle.battle_caveman import battle_caveman
@@ -7,6 +7,24 @@ from battle.battle_modern import battle_british_soldier
 from battle.battle_nazi import battle_nazi
 from battle.battle_ninja import battle_ninja
 from battle.battle_alien import battle_alien
+
+from characters.player import PlayerCharacter, Player
+
+def start_game():
+
+    def get_limited_input(prompt, max_length):
+        user_input = input(prompt)
+        while len(user_input) > max_length:
+            print(f"Input too long! Please enter up to {max_length} characters.")
+            user_input = input(prompt)
+        return user_input
+
+    player_name = get_limited_input("Enter name: ")
+
+    # filename = "image.png"
+    # with image.open(filename) as image:
+    #     width, height = image.size
+
 from characters.player import PlayerCharacter
 import pygame
 
@@ -32,6 +50,7 @@ def start_game():
     intro_image = pygame.image.load("images/deaths_via_berry.jpg").convert()
     screen.blit(intro_image, (0, 0))
     pygame.display.flip()
+
 
     print("Cyclospora");
     time.sleep(3);
