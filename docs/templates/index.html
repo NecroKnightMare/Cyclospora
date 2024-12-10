@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyclospora Game</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #game-container {
+            margin-top: 20px;
+            padding: 20px;
+        }
+        .score {
+            font-size: 20px;
+        }
+        .health {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Cyclospora Game</h1>
+    <p>Status: {{ status }}</p>
+    <div id="game-container">
+        <p class="score">Score: {{ score }}</p>
+        <p class="health">Health: {{ health }}</p>
+    </div>
+
+    <!-- Audio element for background music or sounds -->
+    <audio id="background-sound" controls autoplay loop>
+        <source src="{{ url_for('static', filename='sounds/background_music.mp3') }}" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+</body>
+</html>
