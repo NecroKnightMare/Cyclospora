@@ -2,6 +2,7 @@ import random
 from items.weapon import club, sword, m1_garand
 from characters.player import PlayerCharacter
 from characters.npc import Nazi_Soldier
+from characters.npc import health_roll
 
 
 def battle_nazi(player):
@@ -10,7 +11,8 @@ def battle_nazi(player):
     The player is granted an M1 Garand for this battle.
     """
     enemy = Nazi_Soldier()
-
+    health_roll()
+    
     while player.hp > 0 and enemy.hp > 0:
         # Player's turn
         print("\nPlayer's turn:")

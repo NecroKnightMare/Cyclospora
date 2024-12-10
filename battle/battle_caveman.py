@@ -3,6 +3,7 @@ from items.weapon import club
 from characters.player import PlayerCharacter
 from characters.npc import Caveman
 import pygame
+from characters.npc import health_roll
 
 
 def battle_caveman(player):
@@ -10,6 +11,8 @@ def battle_caveman(player):
     Simulates a battle between the player and a Caveman.
     """
     enemy = Caveman()  # Create the Caveman enemy
+
+    health_roll()
 
     pygame.init()
     pygame.mixer.init()

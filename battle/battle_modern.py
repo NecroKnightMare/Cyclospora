@@ -2,6 +2,7 @@ import random
 from items.weapon import club, sword, m16
 from characters.player import PlayerCharacter
 from characters.npc import British_Soldier
+from characters.npc import health_roll
 
 
 def battle_british_soldier(player):
@@ -12,6 +13,7 @@ def battle_british_soldier(player):
     Running away is harder, and failed negotiation has worse consequences.
     """
     enemy = British_Soldier()
+    health_roll()
 
     while player.hp > 0 and enemy.hp > 0:
         # Player's turn

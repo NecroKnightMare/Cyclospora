@@ -2,12 +2,16 @@ import random
 from weapon import Weapon
 from weapon import club
 from player import PlayerCharacter
+from characters.npc import health_roll
+
 
 
 def battle(player, enemy):
     """
     Simulates a battle between the player and an enemy which is why its named battle.
     """
+    health_roll()
+
     while player.hp > 0 and enemy.hp > 0:
         # Player's turn
         print("\nPlayer's turn:")
