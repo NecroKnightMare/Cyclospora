@@ -7,6 +7,7 @@ from battle.battle_modern import battle_british_soldier
 from battle.battle_nazi import battle_nazi
 from battle.battle_ninja import battle_ninja
 from battle.battle_alien import battle_alien
+
 from characters.player import PlayerCharacter, Player
 
 def start_game():
@@ -23,45 +24,76 @@ def start_game():
     # filename = "image.png"
     # with image.open(filename) as image:
     #     width, height = image.size
+
+from characters.player import PlayerCharacter
+import pygame
+
+def start_game():
+    pygame.init()
+    pygame.mixer.init()
+
+    screen_width = 800  # Adjust as needed
+    screen_height = 600  # Adjust as needed
+    screen = pygame.display.set_mode((screen_width, screen_height))
+    pygame.display.set_caption("Cyclospora")
+
+    main_image = pygame.image.load("images/main.jpeg").convert()
+    screen.blit(main_image, (0, 0))
+    pygame.display.flip()
+    time.sleep(3)
+
+
+    # Load background music
+    pygame.mixer.music.load("Ambience/ObservingTheStar.ogg")
+    pygame.mixer.music.play(-1)
+
+    intro_image = pygame.image.load("images/deaths_via_berry.jpg").convert()
+    screen.blit(intro_image, (0, 0))
+    pygame.display.flip()
+
+
     print("Cyclospora");
-    #time.sleep(3);
+    time.sleep(3);
     print("In recent events, there has been an outbreak of parasitic contamination of our local berries including; blueberries, raspberries, blackberries and strawberries to name a few");
-    #time.sleep(3);
+    time.sleep(3);
     print("Ugh, I'm starving....");
-    #time.sleep(3);
+    time.sleep(3);
     print("What's in the fridge?")
-    #time.sleep(3);
+    time.sleep(3);
     print("You walk into the kitchen and open the fridge");
-    #time.sleep(1);
+    time.sleep(1);
     print("You see there's nothing to prepare for breakfast, other than a boysenberry pie your neighbor brought over, that looked older tha a week");
-    #time.sleep(2);
+    time.sleep(2);
     print("Well it's not the worst thing I've eaten and I need to at least eat it to be respectful");
-    #time.sleep(2);
+    time.sleep(2);
     print("As you munch on the pie, you remember the news and say...");
-    #time.sleep(1);
+    time.sleep(1);
     print("Did the news say boysenberry?...")
-    #time.sleep(3);
+    time.sleep(3);
     print("Meh. Should be fine.");
-    #time.sleep(2);
+    time.sleep(2);
     print("(You've eaten the pie)");
-    #time.sleep(2);
+    time.sleep(2);
     print("That wasn't too bad");
-    #time.sleep(2);
+    time.sleep(2);
     print("Ugh, spoke too soon...");
-    #time.sleep(2);
+    time.sleep(2);
     print("(Stomach starts bubbling and hurting)");
-    #time.sleep(2);
+    time.sleep(2);
     print("ugh...I think I'll sleep it off...");
-    #time.sleep(2);
-    print("You lay down");
+    time.sleep(2);
+    print("You lay down...");
 
     time.sleep(3);
-    Travel_StoneAge();
-
-    #time.sleep(3);
-
 
     def Travel_StoneAge():
+        stone_age_bg = pygame.image.load("images/caveman-bg.jpg").convert()
+        screen.blit(stone_age_bg, (0, 0))
+        pygame.display.flip()
+
+        pygame.mixer.music.load("Ambience/caveman-bg.ogg")
+        pygame.mixer.music.play(-1)
+
         print("(There's an unfamiliar cold hard surface that you knew couldn't be you're bed)");
         #time.sleep(3);
         print("Oww, my back...");
@@ -220,6 +252,8 @@ def start_game():
     Travel_Lexington()
     Travel_WW2()
     Travel_AlienWorld()
+
+pygame.quit()
 
 if __name__ == "__main__":
     start_game()

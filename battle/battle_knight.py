@@ -2,9 +2,15 @@ import random
 from items.weapon import club, sword
 from characters.player import PlayerCharacter
 from characters.npc import Knight
+
 from characters.npc import health_roll
 
+from decorators import game_over_check
+import pygame
 
+
+
+@game_over_check
 def battle_knight(player):
     """
     Simulates a battle between the player and a Knight.

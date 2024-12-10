@@ -105,7 +105,7 @@ class British_Soldier(NPC):
 
 class Nazi_Soldier(NPC):
         """
-        Represents a Caveman, a primitive and hostile human.
+        Represents a Nazi Soldier, a primitive and hostile human.
         """
 
         def __init__(self, name="Nazi Soldier", hp=50, ac=15):
