@@ -11,98 +11,116 @@ from characters.player import PlayerCharacter
 import pygame
 
 def start_game():
+    # Initialize pygame
     pygame.init()
     pygame.mixer.init()
 
+    # Set up the display
     screen_width = 800  # Adjust as needed
     screen_height = 600  # Adjust as needed
     screen = pygame.display.set_mode((screen_width, screen_height))
     pygame.display.set_caption("Cyclospora")
 
-    main_image = pygame.image.load("images/main.jpeg").convert()
-    screen.blit(main_image, (0, 0))
-    pygame.display.flip()
-    time.sleep(3)
-
-
-    # Load background music
-    pygame.mixer.music.load("Ambience/ObservingTheStar.ogg")
-    pygame.mixer.music.play(-1)
-
+    # Load images
+    main_menu_image = pygame.image.load("images/main.jpeg").convert()
     intro_image = pygame.image.load("images/deaths_via_berry.jpg").convert()
-    screen.blit(intro_image, (0, 0))
-    pygame.display.flip()
+    stone_age_bg = pygame.image.load("images/caveman-bg.jpg").convert()
 
-    print("Cyclospora");
-    time.sleep(3);
-    print("In recent events, there has been an outbreak of parasitic contamination of our local berries including; blueberries, raspberries, blackberries and strawberries to name a few");
-    time.sleep(3);
-    print("Ugh, I'm starving....");
-    time.sleep(3);
-    print("What's in the fridge?")
-    time.sleep(3);
-    print("You walk into the kitchen and open the fridge");
-    time.sleep(1);
-    print("You see there's nothing to prepare for breakfast, other than a boysenberry pie your neighbor brought over, that looked older tha a week");
-    time.sleep(2);
-    print("Well it's not the worst thing I've eaten and I need to at least eat it to be respectful");
-    time.sleep(2);
-    print("As you munch on the pie, you remember the news and say...");
-    time.sleep(1);
-    print("Did the news say boysenberry?...")
-    time.sleep(3);
-    print("Meh. Should be fine.");
-    time.sleep(2);
-    print("(You've eaten the pie)");
-    time.sleep(2);
-    print("That wasn't too bad");
-    time.sleep(2);
-    print("Ugh, spoke too soon...");
-    time.sleep(2);
-    print("(Stomach starts bubbling and hurting)");
-    time.sleep(2);
-    print("ugh...I think I'll sleep it off...");
-    time.sleep(2);
-    print("You lay down...");
+    # Load sounds
+    intro_music = "Ambience/ObservingTheStar.ogg"
+    stone_age_music = "Ambience/caveman-bg.ogg"
 
-    time.sleep(3);
+    # --- Game variables ---
+    current_scene = "main_menu"
+    player = None
 
-    def Travel_StoneAge():
-        stone_age_bg = pygame.image.load("images/caveman-bg.jpg").convert()
-        screen.blit(stone_age_bg, (0, 0))
-        pygame.display.flip()
+    # --- Game loop ---
+    running = True
+    while running:
+        # 1. Process events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.KEYDOWN:  # Proceed to next scene on key press
+                if current_scene == "main_menu":
+                    current_scene = "intro"
+                elif current_scene == "intro":
+                    current_scene = "stone_age"
 
-        pygame.mixer.music.load("Ambience/caveman-bg.ogg")
-        pygame.mixer.music.play(-1)
+        # 2. Update game state
+        if current_scene == "main_menu":
+            screen.blit(main_menu_image, (0, 0))
+        elif current_scene == "intro":
+            screen.blit(intro_image, (0, 0))
+            pygame.mixer.music.load(intro_music)
+            pygame.mixer.music.play(-1)
 
-        print("(There's an unfamiliar cold hard surface that you knew couldn't be you're bed)");
-        #time.sleep(3);
-        print("Oww, my back...");
+            # Display intro text with time delays
+            print("Cyclospora")
+            time.sleep(3)
+            print("In recent events, there has been an outbreak of parasitic contamination of our local berries including; blueberries, raspberries, blackberries and strawberries to name a few")
+            time.sleep(3)
+            print("Ugh, I'm starving....")
+            time.sleep(3)
+            print("You walk into the kitchen and open the fridge");
+            time.sleep(1);
+            print("You see there's nothing to prepare for breakfast, other than a boysenberry pie your neighbor brought over, that looked older tha a week");
+            time.sleep(2);
+            print("Well it's not the worst thing I've eaten and I need to at least eat it to be respectful");
+            time.sleep(2);
+            print("As you munch on the pie, you remember the news and say...");
+            time.sleep(1);
+            print("Did the news say boysenberry?...")
+            time.sleep(3);
+            print("Meh. Should be fine.");
+            time.sleep(2);
+            print("(You've eaten the pie)");
+            time.sleep(2);
+            print("That wasn't too bad");
+            time.sleep(2);
+            print("Ugh, spoke too soon...");
+            time.sleep(2);
+            print("(Stomach starts bubbling and hurting)");
+            time.sleep(2);
+            print("ugh...I think I'll sleep it off...");
+            time.sleep(2);
+            print("You lay down...");
 
-        time.sleep(2);
-        print("(As you start adjusting yourself to your surroundings, You see foliage and start hearing loud noises you feel like you've heard in a movie");
-        time.sleep(3);
+            time.sleep(3);
+        elif current_scene == "stone_age":
+            screen.blit(stone_age_bg, (0, 0))
+            pygame.mixer.music.load(stone_age_music)
+            pygame.mixer.music.play(-1)
 
-        #time.sleep(2);
-        print("(As you start adjusting yourself to your surroundings, You see foliage and start hearing loud noises you feel like you've heard in a movie)")
-        #time.sleep(3);
+            print("(There's an unfamiliar cold hard surface that you knew couldn't be you're bed)")
+            time.sleep(3)
+            print("Oww, my back...")
+            time.sleep(2)
+            time.sleep(2);
+            print("(As you start adjusting yourself to your surroundings, You see foliage and start hearing loud noises you feel like you've heard in a movie");
+            time.sleep(3);
 
-        print("What the....");
-        #time.sleep(1);
-        print("(You shoot up and start scrambling around)");
-        #time.sleep(2);
-        print("How did I get here?!");
-        #time.sleep(3);
-        print("Am I dreaming?");
-        #time.sleep(2);
-        print("(As you look around you see what you believe to be a man)");
-        #time.sleep(3);
-        print("Excuse Me!");
-        #time.sleep(2);
-        print("(He notices you and starts sprinting with explosive power towards you");
+            #time.sleep(2);
+            print("(As you start adjusting yourself to your surroundings, You see foliage and start hearing loud noises you feel like you've heard in a movie)")
+            #time.sleep(3);
 
-        player = PlayerCharacter("You", 100, 10)
-        battle_caveman(player)
+            print("What the....");
+            #time.sleep(1);
+            print("(You shoot up and start scrambling around)");
+            #time.sleep(2);
+            print("How did I get here?!");
+            #time.sleep(3);
+            print("Am I dreaming?");
+            #time.sleep(2);
+            print("(As you look around you see what you believe to be a man)");
+            #time.sleep(3);
+            print("Excuse Me!");
+            #time.sleep(2);
+            print("(He notices you and starts sprinting with explosive power towards you");
+            player = PlayerCharacter("You", 100, 10)
+            battle_caveman(player)
+
+            running = False
 
     def Travel_CastleCamelot():
         print("(Your head is pounding and your arms and legs are aching)");
