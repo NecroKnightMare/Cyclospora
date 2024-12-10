@@ -1,13 +1,9 @@
 
 import random
 import time
-from battle.battle_caveman import battle_caveman
-from battle.battle_knight import battle_knight
-from battle.battle_modern import battle_british_soldier
-from battle.battle_nazi import battle_nazi
-from battle.battle_ninja import battle_ninja
-from battle.battle_alien import battle_alien
-from characters.player import PlayerCharacter
+from battle.battle import start_battle, render_battle_screen
+from characters.player import PlayerCharacter, Creature
+from characters.npc import Caveman, Knight, Ninja, British_Soldier, Nazi_Soldier, Alien
 import pygame
 import sys
 
@@ -25,7 +21,7 @@ class ScrollingText:
 
     def render_text(self):
         lines = self.text.split('\n')
-        max_width = self.screen_width - 100  # Leave some margin on the sides
+        max_width = self.screen_width - 25  # Leave some margin on the sides
         total_height = 0
         for line in lines:
             width, height = self.font.size(line)
@@ -49,6 +45,7 @@ class ScrollingText:
         screen.blit(self.text_surface, (self.screen_width // 2 - self.text_surface.get_width() // 2, self.y))
 
 def start_game():
+    global player, enemy, battle_turn
     pygame.init()
     pygame.mixer.init()
 
@@ -60,11 +57,12 @@ def start_game():
     font = pygame.font.Font(None, 36)
     text_color = (255, 255, 255)
 
-
     # Load images
     main_menu_image = pygame.image.load("images/main.jpeg").convert()
     intro_image = pygame.image.load("images/deaths_via_berry.jpg").convert()
     stone_age_bg = pygame.image.load("images/caveman-bg.jpg").convert()
+    battle_bg = pygame.Surface((screen_width, screen_height))
+    battle_bg.fill((128, 128, 128))  # Gray background for battle scene
 
     main_menu_image = pygame.transform.scale(main_menu_image, (screen_width, screen_height))
     intro_image = pygame.transform.scale(intro_image, (screen_width, screen_height))
@@ -73,17 +71,24 @@ def start_game():
     # Load sounds
     intro_music = pygame.mixer.Sound("Ambience/ObservingTheStar.ogg")
     stone_age_music = pygame.mixer.Sound("Ambience/caveman-bg.ogg")
+    battle_music = pygame.mixer.Sound("Ambience/ST_1_Fight(wave).wav")
+    club_hit_sound = pygame.mixer.Sound('Sounds/CyclosporaSFX/Bonk Sound Effect.mp3')
 
     # Text-related variables
     text_lines = [
         "Cyclospora",
-        "In recent events, there has been an outbreak of parasitic contamination of our local berries including; blueberries, raspberries, blackberries and strawberries to name a few",
+        "In recent events, there has been an outbreak.",
+        "A parasitic contamination of our local berries",
+        "including; blueberries, raspberries, blackberries and strawberries",
         "Ugh, I'm starving....",
         "What's in the fridge?",
         "You walk into the kitchen and open the fridge",
-        "You see there's nothing to prepare for breakfast, other than a boysenberry pie your neighbor brought over, that looked older than a week",
-        "Well it's not the worst thing I've eaten and I need to at least eat it to be respectful",
-        "As you munch on the pie, you remember the news and say...",
+        "You see there's nothing to prepare for breakfast,",
+        "Well there's a boysenberry pie your neighbor brought over,",
+        "that definitely looks older than a week",
+        "Well it's not the worst thing I've eaten...",
+        "I should at least try it to be respectful",
+        "As you munch on the pie, you remember the news and think...",
         "Did the news say boysenberry?...",
         "Meh. Should be fine.",
         "(You've eaten the pie)",
@@ -113,8 +118,15 @@ def start_game():
     selected_option = 0
 
     # Scrolling text objects
-    intro_text = ScrollingText('\n'.join(text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=50)
-    stone_age_text = ScrollingText('\n'.join(stone_age_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=50)
+    intro_text = ScrollingText('\n'.join(text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
+    stone_age_text = ScrollingText('\n'.join(stone_age_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
+
+    # Battle variables
+    battle_active = False
+    enemy = None
+    battle_turn = "player"
+    battle_actions = ["Attack", "Run away", "Try to reason", "Do nothing"]
+    selected_action = 0
 
     # --- Game loop ---
     running = True
@@ -127,13 +139,17 @@ def start_game():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:  
                     selected_option = (selected_option + 1) % len(menu_options)
+                    selected_action = (selected_action + 1) % len(battle_actions)
                 elif event.key == pygame.K_UP:  
                     selected_option = (selected_option - 1) % len(menu_options)
+                    selected_action = (selected_action - 1) % len(battle_actions)
                 elif event.key == pygame.K_RETURN:  
                     if selected_option == 0:  
                         current_scene = "intro"
                     elif selected_option == 1:  
                         running = False
+                elif event.key == pygame.K_SPACE and current_scene == "battle":
+                    handle_battle_action()
 
         # 2. Update game state
         if current_scene == "intro":
@@ -149,9 +165,17 @@ def start_game():
             stone_age_text.update()
             if stone_age_text.y == 0:
                 player = PlayerCharacter("You", 100, 10)
-                battle_caveman(player)
-                current_scene = "next_scene"
+                enemy = Caveman()
+                battle_turn = "player"
+                start_battle()
+                current_scene = "battle"
                 stone_age_music.stop()
+                battle_music.play(-1)
+        elif current_scene == "battle":
+            if player is None:
+                player = PlayerCharacter("You", 100, 10)
+            update_battle_state()
+            check_battle_end()
 
         # 3. Render
         screen.fill((0, 0, 0))  # Clear the screen with a black background
@@ -170,14 +194,75 @@ def start_game():
         elif current_scene == "stone_age":
             screen.blit(stone_age_bg, (0, 0))
             stone_age_text.draw(screen)
+        elif current_scene == "battle":
+            render_battle_screen(screen, font, text_color, player, enemy, battle_turn, battle_actions, selected_action)
+        elif current_scene == "game_over":
+            screen.fill((0, 0, 0))
+            if player.hp > 0:
+                game_over_text = font.render("You defeated the enemy! Congratulations!", True, text_color)
+            else:
+                game_over_text = font.render("The enemy defeated you. Game over.", True, text_color)
+            screen.blit(game_over_text, (50, screen_height // 2))
 
         pygame.display.flip()
         clock.tick(60)
 
     pygame.quit()
 
+def start_battle():
+    global player, enemy, battle_active
+    if player is None:
+        player = PlayerCharacter("You", 100, 10)
+    enemy = choose_enemy()
+    battle_active = True
+
+def choose_enemy():
+    enemies = [Caveman(), Knight(), Ninja(), British_Soldier(), Nazi_Soldier(), Alien()]
+    return random.choice(enemies)
+
+def handle_battle_action():
+    global battle_turn, current_scene, selected_action
+    if battle_turn == "player":
+        if selected_action == 0:
+            player.attack(enemy)
+        elif selected_action == 1:
+            if random.random() < player.special["Luck"] * 0.1:
+                print("You successfully escaped!")
+                current_scene = "stone_age"
+                return
+            else:
+                print("You failed to escape!")
+        elif selected_action == 2:
+            if random.random() < player.special["Perception"] * 0.05:
+                print("You successfully reasoned with the enemy!")
+                current_scene = "stone_age"
+                return
+            else:
+                print(f"The {enemy.name} doesn't understand you.")
+        elif selected_action == 3:
+            print("You do nothing.")
+        battle_turn = "enemy"
+
+def update_battle_state():
+    global battle_turn, player, enemy
+    if battle_turn == "enemy":
+        enemy.attack(player)
+        battle_turn = "player"
+
+def check_battle_end():
+    global battle_active, current_scene
+    if player.hp <= 0:
+        print("You were defeated! Game over.")
+        battle_active = False
+        current_scene = "game_over"
+    elif enemy.hp <= 0:
+        print(f"You defeated the {enemy.name}!")
+        battle_active = False
+        current_scene = "stone_age"
+
 if __name__ == "__main__":
     start_game()
+
 
 #     def Travel_CastleCamelot():
 #         print("(Your head is pounding and your arms and legs are aching)");
