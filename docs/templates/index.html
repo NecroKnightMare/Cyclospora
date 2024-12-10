@@ -11,30 +11,21 @@
             font-family: Arial, sans-serif;
             text-align: center;
         }
+        h1 {
+            margin-top: 50px;
+        }
         #game-container {
             margin-top: 20px;
             padding: 20px;
-        }
-        .score {
-            font-size: 20px;
-        }
-        .health {
-            font-size: 20px;
         }
     </style>
 </head>
 <body>
     <h1>Welcome to the Cyclospora Game</h1>
-    <p>Status: {{ status }}</p>
+    <p>Enjoy the game in the terminal below:</p>
     <div id="game-container">
-        <p class="score">Score: {{ score }}</p>
-        <p class="health">Health: {{ health }}</p>
+        <pre id="game-output">{{ game_output }}</pre>
+        <pre id="game-output"></pre>
     </div>
-
-    <!-- Audio element for background music or sounds -->
-    <audio id="background-sound" controls autoplay loop>
-        <source src="{{ url_for('static', filename='sounds/background_music.mp3') }}" type="audio/mp3">
-        Your browser does not support the audio element.
-    </audio>
 </body>
 </html>
