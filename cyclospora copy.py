@@ -1,7 +1,7 @@
 
 import random
 import time
-from PIL import I,agge
+from PIL import Image
 from battle.battle import start_battle, render_battle_screen
 from characters.creature import PlayerCharacter, Creature
 from characters.npc import Caveman, Knight, Ninja, British_Soldier, Nazi_Soldier, Alien
@@ -44,10 +44,11 @@ class ScrollingText:
             self.y = 0
 
     def draw(self, screen):
-        screen.blit(self.text_surface, (self.screen_width // 2 - self.text_surface.get_width() // 2, self.y))
+        # screen.blit(self.text_surface, (self.screen_width // 2 - self.text_surface.get_width() // 2, self.y))
+        for i, text_surface in enumerate(self.text_surfaces): surface.blit(text_surface, (10, self.y + i * self.line_spacing))
 
 def start_game():
-    global current_scene, player, enemy, battle_turn, selected_action, battle_actions, screen, font, text_color, screen_width, screen_height, clock
+    # global current_scene, player, enemy, battle_turn, selected_action, battle_actions, screen, font, text_color, screen_width, screen_height, clock
     pygame.init()
     pygame.mixer.init()
 
@@ -55,6 +56,8 @@ def start_game():
     screen_height = 600
     screen = pygame.display.set_mode((screen_width, screen_height))
     pygame.display.set_caption("Cyclospora")
+
+    clock = pygame.time.Clock()
 
     font = pygame.font.Font(None, 36)
     text_color = (255, 255, 255)
@@ -101,12 +104,6 @@ def start_game():
     # Load background music
     pygame.mixer.music.load("Ambience/ObservingTheStar.ogg")
     pygame.mixer.music.play(-1)
-
-    # # Game variables Ariel: Should this be before the lines?#### delete if not
-    # current_scene = "main_menu"
-    # player = None
-    # menu_options = ["Play", "Quit"]
-    # selected_option = 0
 
     # Text-related variables
     text_lines = [
@@ -161,7 +158,7 @@ def start_game():
         "Where am I now?!",
         "(YOu hear a commotion to your left and see  Geisha in the midst of a crowd walking , almost like a parade)",
         "(The lights start turning on and the sun is setting, you realize it's getting dark out)",
-        "'Crap, gotta find somewhere to sleep'"),
+        "'Crap, gotta find somewhere to sleep'",
         "(You wonder the district and see food vendors and the area becoming livelier)",
         "(You're stomach still hurts from that pie you ate. But you feel an insatuated hunger)",
         "'Can I get some food please?'(You ask a vendor, she clearly doesn't understand you)",
@@ -227,7 +224,7 @@ def start_game():
         "(CYCLOSPORA)"
     ]
 
-    # Game variables Ariel: Should this be before the lines?####
+    # Game variables
     current_scene = "main_menu"
     player = None
     menu_options = ["Play", "Quit"]
@@ -284,6 +281,17 @@ def start_game():
                 battle_turn = "player"
     #need outro screen
 
+        # Move the rectangle
+        rect_x += rect_speed_x
+        rect_y += rect_speed_y
+
+        # Bounce the rectangle off the edges
+        if rect_x < 0 or rect_x + rect_width > screen_width:
+            rect_speed_x = -rect_speed_x
+        if rect_y < 0 or rect_y + rect_height > screen_height:
+            rect_speed_y = -rect_speed_y
+
+        
         # 3. Render
         screen.fill((0, 0, 0))  # Clear the screen with a black background
 
@@ -332,7 +340,7 @@ def intro_screen(screen, font, text_color, screen_width, screen_height, clock, t
         intro_text.draw(screen)
         pygame.display.flip()
         clock.tick(60)
-    current_scene = "stone_age"
+    current_scene = "intro_screen"
 
 def stone_age_screen(screen, font, text_color, screen_width, screen_height, clock, stone_age_text_lines):
     global current_scene
