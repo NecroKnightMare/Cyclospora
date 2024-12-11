@@ -1,4 +1,3 @@
-
 import random
 import time
 from battle.battle import handle_enemy_turn, start_battle, render_battle_screen
@@ -51,6 +50,44 @@ class ScrollingText:
         # Check if the text has scrolled completely off the screen
         return self.y <= -self.text_surface.get_height()
 
+def load_scene(scene_name, screen, font, text_color, screen_width, screen_height, clock, text_lines, background=None, music=None):
+    global current_scene, player, enemy
+
+    if music:
+        pygame.mixer.stop()  # Stop current music
+        music.play(-1)  # Play new scene's music
+
+    scrolling_text = ScrollingText(
+        '\n'.join(text_lines),
+        font,
+        text_color,
+        screen_width,
+        screen_height,
+        scroll_speed=1,
+        line_spacing=180
+    )
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                # Allow skipping the scrolling
+                return
+
+        scrolling_text.update()
+        if background:
+            screen.blit(background, (0, 0))  # Use the provided background image
+        else:
+            screen.fill((0, 0, 0))  # Default black background
+        scrolling_text.draw(screen)
+        pygame.display.flip()
+        clock.tick(60)
+
+        if scrolling_text.is_finished():
+            return
+
 def start_game():
     global current_scene, player, enemy, battle_turn, selected_action, battle_actions, screen, font, text_color, screen_width, screen_height, clock
     pygame.init()
@@ -81,51 +118,68 @@ def start_game():
     battle_music = pygame.mixer.Sound("Ambience/ST_1_Fight(wave).wav")
     club_hit_sound = pygame.mixer.Sound('Sounds/CyclosporaSFX/Bonk Sound Effect.mp3')
 
-    # Text-related variables
-    text_lines = [
-        "Cyclospora",
-        "In recent events, there has been an outbreak.",
-        "A parasitic contamination of our local berries",
-        "including; blueberries, raspberries, blackberries and strawberries",
-        "Ugh, I'm starving....",
-        "What's in the fridge?",
-        "You walk into the kitchen and open the fridge",
-        "You see there's nothing to prepare for breakfast,",
-        "Well there's a boysenberry pie your neighbor brought over,",
-        "that definitely looks older than a week",
-        "Well it's not the worst thing I've eaten...",
-        "I should at least try it to be respectful",
-        "As you munch on the pie, you remember the news and think...",
-        "Did the news say boysenberry?...",
-        "Meh. Should be fine.",
-        "(You've eaten the pie)",
-        "That wasn't too bad",
-        "Ugh, spoke too soon...",
-        "(Stomach starts bubbling and hurting)",
-        "ugh...I think I'll sleep it off...",
-        "You lay down..."
-    ]
-    stone_age_text_lines = [
-        "(There's an unfamiliar cold hard surface that you knew couldn't be you're bed)",
-        "Oww, my back...",
-        "(As you start adjusting yourself to your surroundings, You see foliage and start hearing loud noises you feel like you've heard in a movie)",
-        "What the....",
-        "(You shoot up and start scrambling around)",
-        "How did I get here?!",
-        "Am I dreaming?",
-        "(As you look around you see what you believe to be a man)",
-        "Excuse Me!",
-        "(He notices you and starts sprinting with explosive power towards you)"
-    ]
-    medieval_time_text_lines = [
+    # Scene Data
+    scenes = {
+        "intro": {
+        "text_lines": [
+            "Cyclospora",
+            "In recent events, there has been an outbreak.",
+            "A parasitic contamination of our local berries",
+            "including; blueberries, raspberries, blackberries and strawberries",
+            "Ugh, I'm starving....",
+            "What's in the fridge?",
+            "You walk into the kitchen and open the fridge",
+            "You see there's nothing to prepare for breakfast,",
+            "Well there's a boysenberry pie your neighbor brought over,",
+            "that definitely looks older than a week",
+            "Well it's not the worst thing I've eaten...",
+            "I should at least try it to be respectful",
+            "As you munch on the pie, you remember the news and think...",
+            "Did the news say boysenberry?...",
+            "Meh. Should be fine.",
+            "(You've eaten the pie)",
+            "That wasn't too bad",
+            "Ugh, spoke too soon...",
+            "(Stomach starts bubbling and hurting)",
+            "ugh...I think I'll sleep it off...",
+            "You lay down..."
+    ],
+            "background": intro_image,
+            "music": intro_music,
+            "enemy": None
+        },
+    "stone_age": {
+        "text_lines": [
+            "(There's an unfamiliar cold hard surface that you knew couldn't be you're bed)",
+            "Oww, my back...",
+            "(As you start adjusting yourself to your surroundings, You see foliage and start hearing loud noises you feel like you've heard in a movie)",
+            "What the....",
+            "(You shoot up and start scrambling around)",
+            "How did I get here?!",
+            "Am I dreaming?",
+            "(As you look around you see what you believe to be a man)",
+            "Excuse Me!",
+            "(He notices you and starts sprinting with explosive power towards you)"
+    ],
+        "background": stone_age_bg,
+            "music": stone_age_music,
+            "enemy": "Caveman"
+    },
+    "medieval_time": {
+       "text_lines": [
     "(Your head is pounding and your arms and legs are aching)"
     "Damn it...(You hold your head in your hands)"
     "(As you lay in pain from the unexpected battle, the sound of metal clanging together gets louder and louder)"
     "HARK!! Who goes there?!"
     "(You hurriedly stand up and adrenaline courses through you're veins. As you look around, you notice your in some medieval era)"
     "Please, not again"
-    ]
-    reddistrict_text_lines = [
+    ],
+       "background": medieval_time_bg,
+            "music": medieval_time_music,
+            "enemy": "Knight"
+    },
+    "reddistrict": {
+        "text_lines": [
         "WHY IS THIS HAPPENING TO ME?!"
         "(You start trembling with anger and feelings of helplessness...)"
         "Where am I now?!"
@@ -143,14 +197,24 @@ def start_game():
         "(You quickly put your weapon away, back up and sheathe it and apologize profusely to the lady and wander away from the body you just left in the street.)"
         "(After panic walking away from the murder you just committed. You find another vender and ask about a nearby inn. She seems to understand and points you in the direction of an Inn)"
         "(You thank her and start walking towards the Inn, as you walk you begin to feel light-headed and blackout again.)" 
-    ]
-    wwii_text_lines = [
+    ],
+        "background": reddistrict_bg,
+            "music": reddistrict_music,
+            "enemy": "Ninja"
+    },
+    "wwii": {
+    "text_lines": [
         "(You awake and look around, you notice a city-scape bombed to a point it resembled rubble more than a city.)"
         "Halt! You there!"
         "(You stop and slowly turn around)"
         "(You are face to face with a Nazi soldier, obviously there isn't much to say at this point, you look to your right and find a discarded rifle, pick it up and point)"
-    ]
-    modern_times_text_lines = [
+    ],
+    "backround": wwii_bg,
+    "music": wwii_music,
+    "enemy": "Nazi_soldier"
+    },
+    "modern_times": {
+      "text_lines": [
         "(Well, that one doesn't feel quite like murder as the previous ones."
         "That was a pretty easy choice.)"
         "(You begin to look around, you debate just laying down and waiting"
@@ -165,14 +229,23 @@ def start_game():
         "(You realize you're just a dude holding a bunch of weapons)"
         "Somewhere in the middle of what appears to be the United Kingdom." 
         "They don't like guns and obviously do not like you right now.)"
-    ]
-    mars_text_lines = [
+    ],
+    "backround": modern_bg,
+    "music": modern_time_music,
+    "enemy": "British_soldier"
+    },
+    "mars": {
+    "text_lines": [
         "Well, guess I'm just a murderer now with some kind of berry monster helping me commit more crimes in various ages."
         "(You begin to wander off attempting to hide somewhere not in the middle of the street. You find yourself wandering down an alley.)"
         "(At the end of the alley, a bright light suddenly bursts out of the wall. It resembles a portal that you would see in Star Trek or something else sci-fi.)"
         "Well guess I really don't have much to lose now."
         "(You reload your rifle, take a look around and walk through the portal.)"
-    ]
+    ],
+    "backround": modern_bg,
+    "music": mars_music
+    "enemy": "Alien"
+    },
 
     # Game variables
     current_scene = "main_menu"
@@ -280,23 +353,45 @@ def intro_screen(screen, font, text_color, screen_width, screen_height, clock, t
             return
 
 def stone_age_screen(screen, font, text_color, screen_width, screen_height, clock, stone_age_text_lines):
-    global current_scene
+    global current_scene, enemy, battle_turn, selected_action, battle_actions
     screen.fill((0, 0, 0))
     stone_age_text = ScrollingText('\n'.join(stone_age_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
+
+    # Initialize battle variables within this scene
+    battle_actions = ["Attack", "Run away", "Try to reason", "Do nothing"]
+    selected_action = 0
+    battle_turn = "player"
+    enemy = choose_enemy(current_scene)  # Initialize the enemy here
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                current_scene = "medieval_time"
-                return
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_DOWN:
+                    selected_action = (selected_action + 1) % len(battle_actions)
+                elif event.key == pygame.K_UP:
+                    selected_action = (selected_action - 1) % len(battle_actions)
+                elif event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
+                    execute_battle_action(selected_action)  # Call your battle action function
+
         stone_age_text.update()
         screen.fill((0, 0, 0))
-        stone_age_text.draw(screen)
+
+        # Render the battle screen within this scene
+        if not stone_age_text.is_finished():
+            stone_age_text.draw(screen)
+        else:
+            render_battle_screen(screen, font, text_color, player, enemy, battle_turn, battle_actions, selected_action)
+            if battle_turn == "enemy":
+                handle_enemy_turn(player, enemy)
+                battle_turn = "player"
+
         pygame.display.flip()
         clock.tick(60)
-        if stone_age_text.is_finished():
+
+        if stone_age_text.is_finished() and enemy.hp <= 0:  # Check if enemy is defeated
             current_scene = "medieval_time"
             return
 
@@ -407,30 +502,33 @@ def handle_battle_action():
                 elif event.key == pygame.K_UP:
                     selected_action = (selected_action - 1) % len(battle_actions)
                 elif event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
-                    # Execute the selected action
-                    if selected_action == 0:
-                        weapon = club
-                        player.attack(enemy, weapon)
-                    elif selected_action == 1:
-                        if random.random() < player.special["Luck"] * 0.1:
-                            print("You successfully escaped!")
-                            next_scene()
-                        else:
-                            print("You failed to escape!")
-                    elif selected_action == 2:
-                        if random.random() < player.special["Perception"] * 0.05:
-                            print("You successfully reasoned with the enemy!")
-                            next_scene()
-                        else:
-                            print(f"The {enemy.name} doesn't understand you.")
-                    elif selected_action == 3:
-                        print("You do nothing.")
-                    battle_turn = "enemy"
-
-        # If it's the enemy's turn, handle the enemy's action
-        if battle_turn == "enemy":
+                    execute_battle_action(selected_action)
+    
+    render_battle_screen(screen, font, text_color, player, enemy, battle_turn, battle_actions, selected_action)
+    if battle_turn == "enemy":
             handle_enemy_turn(player, enemy)
             battle_turn = "player"
+
+def execute_battle_action(action_index):
+    global battle_turn, current_scene
+    if action_index == 0:
+        weapon = club  # Example: use the club weapon
+        player.attack(enemy, weapon)
+    elif action_index == 1:
+        if random.random() < player.special["Luck"] * 0.1:
+            print("You successfully escaped!")
+            next_scene()
+        else:
+            print("You failed to escape!")
+    elif action_index == 2:
+        if random.random() < player.special["Perception"] * 0.05:
+            print("You successfully reasoned with the enemy!")
+            next_scene()
+        else:
+            print(f"The {enemy.name} doesn't understand you.")
+    elif action_index == 3:
+        print("You do nothing.")
+    battle_turn = "enemy"
 
 def next_scene():
     global current_scene
