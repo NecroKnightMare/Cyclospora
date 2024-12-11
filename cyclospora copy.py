@@ -72,9 +72,6 @@ def load_scene(scene_name, screen, font, text_color, screen_width, screen_height
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                # Allow skipping the scrolling
-                return
 
         scrolling_text.update()
         
@@ -124,18 +121,15 @@ def intro_screen(screen, font, text_color, screen_width, screen_height, clock, t
             current_scene = "stone_age"
             return
 
-def stone_age_screen(screen, font, text_color, screen_width, screen_height, clock, stone_age_text_lines):
-    global current_scene, enemy, battle_turn, selected_action, battle_actions
-    screen.fill((0, 0, 0))
-    stone_age_text = ScrollingText('\n'.join(stone_age_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
+def stone_age_screen(screen, font, text_color, player, enemy, clock):
+    global current_scene, battle_turn, selected_action, battle_actions
 
-    # Initialize battle variables within this scene
+    # Initialize battle variables
     battle_actions = ["Attack", "Run away", "Try to reason", "Do nothing"]
     selected_action = 0
     battle_turn = "player"
-    enemy = choose_enemy(current_scene)  # Initialize the enemy here
 
-    while True:
+    while enemy.hp > 0:  # Battle loop
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -146,26 +140,20 @@ def stone_age_screen(screen, font, text_color, screen_width, screen_height, cloc
                 elif event.key == pygame.K_UP:
                     selected_action = (selected_action - 1) % len(battle_actions)
                 elif event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
-                    execute_battle_action(selected_action)  # Call your battle action function
+                    execute_battle_action(selected_action)
 
-        stone_age_text.update()
-        screen.fill((0, 0, 0))
+        # Render the battle screen
+        render_battle_screen(screen, font, text_color, player, enemy, battle_turn, battle_actions, selected_action)
 
-        # Render the battle screen within this scene
-        if not stone_age_text.is_finished():
-            stone_age_text.draw(screen)
-        else:
-            render_battle_screen(screen, font, text_color, player, enemy, battle_turn, battle_actions, selected_action)
-            if battle_turn == "enemy":
-                handle_enemy_turn(player, enemy)
-                battle_turn = "player"
+        if battle_turn == "enemy":
+            handle_enemy_turn(player, enemy)
+            battle_turn = "player"
 
         pygame.display.flip()
         clock.tick(60)
 
-        if stone_age_text.is_finished() and enemy.hp <= 0:  # Check if enemy is defeated
-            current_scene = "medieval_time"
-            return
+    # Battle ended, move to the next scene
+    next_scene()
 
 def medieval_time_screen(screen, font, text_color, screen_width, screen_height, clock, medieval_time_text_lines):
     global current_scene
@@ -309,8 +297,8 @@ def next_scene():
     elif current_scene == "medieval_time" and enemy.hp <= 0:
         current_scene = "red_district"
     elif current_scene == "red_district" and enemy.hp <= 0:
-        current_scene = "wwii"
-    elif current_scene == "wwii" and enemy.hp <= 0:
+        current_scene = "WWII"
+    elif current_scene == "WWII" and enemy.hp <= 0:
         current_scene = "modern_times"
     elif current_scene == "modern_times" and enemy.hp <= 0:
         current_scene = "mars"
@@ -530,6 +518,7 @@ def start_game():
             load_scene(current_scene, screen, font, text_color, screen_width, screen_height, clock, **scenes[current_scene])
             if current_scene == "stone_age":
                 enemy = Caveman()
+                stone_age_screen(screen, font, text_color, player, enemy, clock)
             elif current_scene == "medieval_time":
                 enemy = Knight()
             elif current_scene == "reddistrict":
