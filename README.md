@@ -3,9 +3,9 @@ RPG game based on a crazy parasite from a berry that causes time travel and bad 
 ##Inspiration
 Based on Travel, Player is sent to other time eras to survive
 
-##Installation
+## Installation
 
-###Windows
+### Windows
 Download the Python Installer:
 
 * Go to the official Python website: python.org
@@ -28,7 +28,7 @@ Verify the Installation:
 
 * You should see the version of Python that you installed.
 
-###macOS
+### macOS
 Download the Python Installer:
 
 * Go to the official Python website: python.org
@@ -49,7 +49,7 @@ Verify the Installation:
 
 * You should see the version of Python that you installed.
 
-###Linux
+### Linux
 Install Python using Package Manager:
 
 * Open your terminal.
@@ -83,11 +83,11 @@ Run the following Command
 * pip install pygame
 
 
-##Install Cyclospora Here
+## Install Cyclospora Here
 
 
 
-##Bugs
+## Bugs
 
 * Pygame can be super picky about text overlay
 * ALSA lib errors can be fixed with:
