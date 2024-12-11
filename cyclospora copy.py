@@ -204,7 +204,7 @@ def start_game():
 
         # 2. Update game state
         if current_scene == "main_menu":
-            main_menu_screen(screen, font, text_color, screen_width, screen_height, clock, main_menu_image, menu_options, selected_option)
+            selected_option = main_menu_screen(screen, font, text_color, screen_width, screen_height, clock, main_menu_image, menu_options, selected_option)
         elif current_scene == "intro":
             intro_screen()
         elif current_scene == "stone_age":

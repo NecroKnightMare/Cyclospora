@@ -19,7 +19,7 @@ def main_menu_screen(screen, font, text_color, screen_width, screen_height, cloc
                     elif selected_option == 1:
                         pygame.quit()
                         sys.exit()
-                    return
+                    return selected_option
 
         screen.blit(main_menu_image, (0, 0))
         
