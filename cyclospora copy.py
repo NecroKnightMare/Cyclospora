@@ -158,7 +158,7 @@ def start_game():
 
         'WHY IS THIS HAPPENING TO ME?!',
         "(You start trembling with anger and feelings of helplessness...)",
-        "'Where am I now?!'"),
+        "Where am I now?!",
         "(YOu hear a commotion to your left and see  Geisha in the midst of a crowd walking , almost like a parade)",
         "(The lights start turning on and the sun is setting, you realize it's getting dark out)",
         "'Crap, gotta find somewhere to sleep'"),
