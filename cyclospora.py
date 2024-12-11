@@ -43,7 +43,6 @@ class ScrollingText:
             self.y = 0
 
     def draw(self, screen):
-        screen.fill((0, 0, 0))
         screen.blit(self.text_surface, (self.screen_width // 2 - self.text_surface.get_width() // 2, self.y))
 
     def is_finished(self):
