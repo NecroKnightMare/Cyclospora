@@ -2,10 +2,11 @@
 import random
 import time
 from battle.battle import start_battle, render_battle_screen
-from characters.player import PlayerCharacter, Creature
+from characters.creature import PlayerCharacter, Creature
 from characters.npc import Caveman, Knight, Ninja, British_Soldier, Nazi_Soldier, Alien
 import pygame
 import sys
+from main_menu import main_menu_screen
 
 class ScrollingText:
     def __init__(self, text, font, color, screen_width, screen_height, scroll_speed=1, line_spacing=50):
@@ -226,6 +227,7 @@ def start_game():
 
     # Battle variables
     battle_active = False
+    player = PlayerCharacter("Player", 100, 100)
     enemy = None
     battle_turn = "player"
     battle_actions = ["Attack", "Run away", "Try to reason", "Do nothing"]
@@ -248,7 +250,9 @@ def start_game():
                     handle_battle_action()
 
         # 2. Update game state
-        if current_scene == "intro":
+        if current_scene == "main_menu":
+            main_menu_screen(screen, font, text_color, screen_width, screen_height, clock, main_menu_image, menu_options, selected_option)
+        elif current_scene == "intro":
             intro_screen()
         elif current_scene == "stone_age":
             stone_age_screen()
@@ -294,7 +298,7 @@ def choose_enemy(current_scene):
     else:
         raise ValueError("Invalid scene for enemy selection")
 
-def intro_screen():
+def intro_screen(screen, font, text_color, screen_width, screen_height, clock, text_lines):
     global current_scene
     screen.fill((0, 0, 0))
     intro_text = ScrollingText('\n'.join(text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
@@ -312,8 +316,8 @@ def intro_screen():
         clock.tick(60)
     current_scene = "stone_age"
 
-def stone_age_screen():
-    global current_scene, player, enemy
+def stone_age_screen(screen, font, text_color, screen_width, screen_height, clock, stone_age_text_lines):
+    global current_scene
     screen.fill((0, 0, 0))
     stone_age_text = ScrollingText('\n'.join(stone_age_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
     while True:
@@ -330,8 +334,8 @@ def stone_age_screen():
         clock.tick(60)
     enemy = Caveman()
 
-def medieval_time_screen():
-    global current_scene, player, enemy
+def medieval_time_screen(screen, font, text_color, screen_width, screen_height, clock, medieval_time_text_lines):
+    global current_scene
     screen.fill((0, 0, 0))
     medieval_time_text = ScrollingText('\n'.join(medieval_time_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
     while True:
@@ -348,7 +352,7 @@ def medieval_time_screen():
         clock.tick(60)
     enemy = Knight()
 
-def red_district_screen():
+def red_district_screen(screen, font, text_color, screen_width, screen_height, clock, reddistrict_text_lines):
     global current_scene, player, enemy
     screen.fill((0, 0, 0))
     red_district_text = ScrollingText('\n'.join(reddistrict_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
@@ -366,7 +370,7 @@ def red_district_screen():
         clock.tick(60)
     enemy = Ninja()
 
-def wwii_screen():
+def wwii_screen(screen, font, text_color, screen_width, screen_height, clock, wwii_text_lines):
     global current_scene, player, enemy
     screen.fill((0, 0, 0))
     wwii_text = ScrollingText('\n'.join(wwii_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
@@ -384,7 +388,7 @@ def wwii_screen():
         clock.tick(60)
     enemy = Nazi_Soldier()
 
-def modern_times_screen():
+def modern_times_screen(screen, font, text_color, screen_width, screen_height, clock, modern_times_text_lines):
     global current_scene, player, enemy
     screen.fill((0, 0, 0))
     modern_times_text = ScrollingText('\n'.join(modern_times_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
@@ -402,7 +406,7 @@ def modern_times_screen():
         clock.tick(60)
     enemy = British_Soldier()
 
-def mars_screen():
+def mars_screen(screen, font, text_color, screen_width, screen_height, clock, mars_text_lines):
     global current_scene, player, enemy
     screen.fill((0, 0, 0))
     mars_text = ScrollingText('\n'.join(mars_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
