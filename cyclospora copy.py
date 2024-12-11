@@ -340,7 +340,7 @@ def intro_screen(screen, font, text_color, screen_width, screen_height, clock, t
         intro_text.draw(screen)
         pygame.display.flip()
         clock.tick(60)
-    current_scene = "stone_age"
+    current_scene = "intro_screen"
 
 def stone_age_screen(screen, font, text_color, screen_width, screen_height, clock, stone_age_text_lines):
     global current_scene
