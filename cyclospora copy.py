@@ -263,7 +263,7 @@ def choose_enemy(current_scene):
 
 def intro_screen(screen, font, text_color, screen_width, screen_height, clock, text_lines):
     global current_scene
-    intro_text = ScrollingText('\n'.join(text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
+    intro_text = ScrollingText('\n'.join(text_lines), font, text_color, screen_width, screen_height, scroll_speed=2, line_spacing=180)
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
