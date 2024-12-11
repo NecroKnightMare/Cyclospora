@@ -178,7 +178,7 @@ def medieval_time_screen(screen, font, text_color, screen_width, screen_height, 
 
 def red_district_screen(screen, font, text_color, screen_width, screen_height, clock, reddistrict_text_lines):
     global current_scene, player, enemy
-    screen.fill((0, 0, 0))
+    # screen.fill((0, 0, 0))
     red_district_text = ScrollingText('\n'.join(reddistrict_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
     while True:
         for event in pygame.event.get():
@@ -273,7 +273,7 @@ def handle_battle_action():
 def execute_battle_action(action_index):
     global battle_turn, current_scene
     if action_index == 0:
-        weapon = club  # Example: use the club weapon
+        weapon = sword  # Example: use the club weapon
         player.attack(enemy, weapon)
     elif action_index == 1:
         if random.random() < player.special["Luck"] * 0.1:
@@ -414,37 +414,42 @@ def start_game():
        "background": medieval_time_bg,
             "music": castle_music,
     },
-    "reddistrict": {
+    "red_district": {
         "text_lines": [
-        "WHY IS THIS HAPPENING TO ME?!"
-        "(You start trembling with anger and feelings of helplessness...)"
-        "Where am I now?!"
-        "(YOu hear a commotion to your left and see  Geisha in the midst of a crowd walking , almost like a parade)"
-        "(The lights start turning on and the sun is setting, you realize it's getting dark out)"
-        "Crap, gotta find somewhere to sleep"
-        "(You wonder the district and see food vendors and the area becoming livelier)"
-        "(You're stomach still hurts from that pie you ate. But you feel an insatuated hunger)"
-        "Can I get some food please?(You ask a vendor, she clearly doesn't understand you)"
-        "Well damn..."
-        "Well maybe if I...(You start to rummage your pockets and pull out your wallet. The vendor starts to panic)"
-        "(You gaze to see what she's fretting about. As you try to see where your gaze ends, you realize it's the weapons you've collected along the way. )"
-        "(You're shocked, and start explaining that you mean no harm, but fail)"
-        "(Some person you can only describe as a stereotypical ninja approaches you with sword drawn.)"
-        "(You quickly put your weapon away, back up and sheathe it and apologize profusely to the lady and wander away from the body you just left in the street.)"
-        "(After panic walking away from the murder you just committed. You find another vender and ask about a nearby inn. She seems to understand and points you in the direction of an Inn)"
-        "(You thank her and start walking towards the Inn, as you walk you begin to feel light-headed and blackout again.)" 
+        "WHY IS THIS HAPPENING TO ME?!",
+        "(You start trembling with anger and feelings of helplessness...)",
+        "Where am I now?!",
+        "(You hear a commotion to your left and see a Geisha",
+        "walking amongst a crowd, almost like a parade)",
+        "(The lights start turning on and the sun is setting,",
+        "you realize it's getting dark out)",
+        "Crap, gotta find somewhere to sleep",
+        "(You wonder the district and see food vendors and the area becoming livelier)",
+        "(You're stomach still hurts from that pie you ate. But you feel an insatuated hunger)",
+        "Can I get some food please?(You ask a vendor, she clearly doesn't understand you)",
+        "Well damn...",
+        "Well maybe if I...(You start to rummage your pockets and pull out your wallet. The vendor starts to panic)",
+        "(You gaze to see what she's fretting about. As you try to see where your gaze ends, you realize it's the weapons you've collected along the way. )",
+        "(You're shocked, and start explaining that you mean no harm, but fail)",
+        "(Some person you can only describe as a stereotypical ninja approaches you with sword drawn.)",
+        "(You quickly put your weapon away, back up and sheathe it and apologize profusely to the lady and wander away from the body you just left in the street.)",
+        "(After panic walking away from the murder you just committed. You find another vender and ask about a nearby inn. She seems to understand and points you in the direction of an Inn)",
+        "(You thank her and start walking towards the Inn, as you walk you begin to feel light-headed and blackout again.)" ,
     ],
         "background": red_district_bg,
             "music": red_district_music,
     },
-    "wwii": {
+    "WWII": {
     "text_lines": [
-        "(You awake and look around, you notice a city-scape bombed to a point it resembled rubble more than a city.)"
-        "Halt! You there!"
-        "(You stop and slowly turn around)"
-        "(You are face to face with a Nazi soldier, obviously there isn't much to say at this point, you look to your right and find a discarded rifle, pick it up and point)"
+        "(You quickly put your weapon away, back up and sheathe it and apologize profusely to the lady and wander away from the body you just left in the street.)",
+        "(After panic walking away from the murder you just committed. You find another vender and ask about a nearby inn. She seems to understand and points you in the direction of an Inn)",
+        "(You thank her and start walking towards the Inn, as you walk you begin to feel light-headed and blackout again.)",
+        "(You awake and look around, you notice a city-scape bombed to a point it resembled rubble more than a city.)",
+        "Halt! You there!",
+        "(You stop and slowly turn around)",
+        "(You are face to face with a Nazi soldier, obviously there isn't much to say at this point, you look to your right and find a discarded rifle, pick it up and point)",
     ],
-    "backround": WWII_bg,
+    "background": WWII_bg,
     "music": WWII_music,
     },
     "modern_times": {
@@ -464,7 +469,7 @@ def start_game():
         "Somewhere in the middle of what appears to be the United Kingdom." 
         "They don't like guns and obviously do not like you right now.)"
     ],
-    "backround": Lexington_bg,
+    "background": Lexington_bg,
     "music": Soldier_music,
     },
     "mars": {
@@ -475,7 +480,7 @@ def start_game():
         "Well guess I really don't have much to lose now."
         "(You reload your rifle, take a look around and walk through the portal.)"
     ],
-    "backround": AlienPlot,
+    "background": AlienPlot,
     "music": battle_music,
     }
     }
@@ -521,7 +526,7 @@ def start_game():
                 enemy = Caveman()
             elif current_scene == "medieval_time":
                 enemy = Knight()
-            elif current_scene == "reddistrict":
+            elif current_scene == "red_district":
                 enemy = Ninja()
             elif current_scene == "WWII":
                 enemy = Nazi_Soldier()
