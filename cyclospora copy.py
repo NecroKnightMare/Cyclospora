@@ -161,7 +161,7 @@ def start_game():
         "Where am I now?!",
         "(YOu hear a commotion to your left and see  Geisha in the midst of a crowd walking , almost like a parade)",
         "(The lights start turning on and the sun is setting, you realize it's getting dark out)",
-        "'Crap, gotta find somewhere to sleep'"),
+        "'Crap, gotta find somewhere to sleep'",
         "(You wonder the district and see food vendors and the area becoming livelier)",
         "(You're stomach still hurts from that pie you ate. But you feel an insatuated hunger)",
         "'Can I get some food please?'(You ask a vendor, she clearly doesn't understand you)",
