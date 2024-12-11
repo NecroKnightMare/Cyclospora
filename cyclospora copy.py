@@ -1,12 +1,13 @@
 
 import random
 import time
-from battle.battle import start_battle, render_battle_screen
+from battle.battle import handle_enemy_turn, start_battle, render_battle_screen
 from characters.creature import PlayerCharacter, Creature
 from characters.npc import Caveman, Knight, Ninja, British_Soldier, Nazi_Soldier, Alien
 import pygame
 import sys
 from main_menu import main_menu_screen
+from items.weapon import sword
 
 class ScrollingText:
     def __init__(self, text, font, color, screen_width, screen_height, scroll_speed=1, line_spacing=50):
@@ -18,7 +19,7 @@ class ScrollingText:
         self.scroll_speed = scroll_speed
         self.line_spacing = line_spacing
         self.text_surface = self.render_text()
-        self.y = 0
+        self.y = screen_height
 
     def render_text(self):
         lines = self.text.split('\n')
@@ -43,7 +44,12 @@ class ScrollingText:
             self.y = 0
 
     def draw(self, screen):
+        screen.fill((0, 0, 0))
         screen.blit(self.text_surface, (self.screen_width // 2 - self.text_surface.get_width() // 2, self.y))
+
+    def is_finished(self):
+        # Check if the text has scrolled completely off the screen
+        return self.y <= -self.text_surface.get_height()
 
 def start_game():
     global current_scene, player, enemy, battle_turn, selected_action, battle_actions, screen, font, text_color, screen_width, screen_height, clock
@@ -174,10 +180,6 @@ def start_game():
     menu_options = ["Play", "Quit"]
     selected_option = 0
 
-    # Scrolling text objects
-    intro_text = ScrollingText('\n'.join(text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
-    stone_age_text = ScrollingText('\n'.join(stone_age_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
-
     # Battle variables
     battle_active = False
     player = PlayerCharacter("Player", 100, 100)
@@ -204,9 +206,11 @@ def start_game():
 
         # 2. Update game state
         if current_scene == "main_menu":
-            selected_option = main_menu_screen(screen, font, text_color, screen_width, screen_height, clock, main_menu_image, menu_options, selected_option)
+            next_scene = main_menu_screen(screen, font, text_color, screen_width, screen_height, clock, main_menu_image, menu_options, selected_option)
+            if next_scene:  # Check if a new scene was returned
+                current_scene = next_scene
         elif current_scene == "intro":
-            intro_screen()
+            intro_screen(screen, font, text_color, screen_width, screen_height, clock, text_lines)
         elif current_scene == "stone_age":
             stone_age_screen()
         elif current_scene == "medieval_time":
@@ -222,6 +226,7 @@ def start_game():
         if current_scene in ["stone_age", "medieval_time", "red_district", "wwii", "modern_times", "mars"]:
             if enemy is None or enemy.hp <= 0:
                 enemy = choose_enemy(current_scene)
+                battle_music.play(-1)
                 battle_turn = "player"
 
         # 3. Render
@@ -229,6 +234,11 @@ def start_game():
 
         if enemy is not None:
             render_battle_screen(screen, font, text_color, player, enemy, battle_turn, battle_actions, selected_action)
+            if battle_turn == "player":
+                handle_battle_action()
+            else:
+                handle_enemy_turn(player, enemy)
+                battle_turn = "player"
 
         pygame.display.flip()
         clock.tick(60)
@@ -253,21 +263,21 @@ def choose_enemy(current_scene):
 
 def intro_screen(screen, font, text_color, screen_width, screen_height, clock, text_lines):
     global current_scene
-    screen.fill((0, 0, 0))
     intro_text = ScrollingText('\n'.join(text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                return
+
         intro_text.update()
-        screen.fill((0, 0, 0))
         intro_text.draw(screen)
         pygame.display.flip()
         clock.tick(60)
-    current_scene = "stone_age"
+
+        if intro_text.is_finished():
+            current_scene = "stone_age"
+            return
 
 def stone_age_screen(screen, font, text_color, screen_width, screen_height, clock, stone_age_text_lines):
     global current_scene
@@ -380,9 +390,13 @@ def mars_screen(screen, font, text_color, screen_width, screen_height, clock, ma
 
 def handle_battle_action():
     global battle_turn, current_scene, selected_action
+    if enemy is None:  # Check if enemy is None
+        print("No enemy to perform action on.")
+        return
     if battle_turn == "player":
         if selected_action == 0:
-            player.attack(enemy)
+            weapon = sword
+            player.attack(enemy, weapon)
         elif selected_action == 1:
             if random.random() < player.special["Luck"] * 0.1:
                 print("You successfully escaped!")

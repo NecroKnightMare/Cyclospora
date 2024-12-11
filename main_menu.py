@@ -15,11 +15,10 @@ def main_menu_screen(screen, font, text_color, screen_width, screen_height, cloc
                     selected_option = (selected_option - 1) % len(menu_options)
                 elif event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
                     if selected_option == 0:
-                        current_scene = "intro"
+                        return "intro"
                     elif selected_option == 1:
                         pygame.quit()
                         sys.exit()
-                    return selected_option
 
         screen.blit(main_menu_image, (0, 0))
         
