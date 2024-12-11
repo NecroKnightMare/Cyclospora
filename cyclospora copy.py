@@ -45,7 +45,7 @@ class ScrollingText:
         screen.blit(self.text_surface, (self.screen_width // 2 - self.text_surface.get_width() // 2, self.y))
 
 def start_game():
-    global player, enemy, battle_turn
+    global current_scene, player, enemy, battle_turn, selected_action, battle_actions, screen, font, text_color, screen_width, screen_height, clock
     pygame.init()
     pygame.mixer.init()
 
@@ -110,6 +110,62 @@ def start_game():
         "Excuse Me!",
         "(He notices you and starts sprinting with explosive power towards you)"
     ]
+    medieval_time_text_lines = [
+    "(Your head is pounding and your arms and legs are aching)"
+    "Damn it...(You hold your head in your hands)"
+    "(As you lay in pain from the unexpected battle, the sound of metal clanging together gets louder and louder)"
+    "HARK!! Who goes there?!"
+    "(You hurriedly stand up and adrenaline courses through you're veins. As you look around, you notice your in some medieval era)"
+    "Please, not again"
+    ]
+    reddistrict_text_lines = [
+        "WHY IS THIS HAPPENING TO ME?!"
+        "(You start trembling with anger and feelings of helplessness...)"
+        "Where am I now?!"
+        "(YOu hear a commotion to your left and see  Geisha in the midst of a crowd walking , almost like a parade)"
+        "(The lights start turning on and the sun is setting, you realize it's getting dark out)"
+        "Crap, gotta find somewhere to sleep"
+        "(You wonder the district and see food vendors and the area becoming livelier)"
+        "(You're stomach still hurts from that pie you ate. But you feel an insatuated hunger)"
+        "Can I get some food please?(You ask a vendor, she clearly doesn't understand you)"
+        "Well damn..."
+        "Well maybe if I...(You start to rummage your pockets and pull out your wallet. The vendor starts to panic)"
+        "(You gaze to see what she's fretting about. As you try to see where your gaze ends, you realize it's the weapons you've collected along the way. )"
+        "(You're shocked, and start explaining that you mean no harm, but fail)"
+        "(Some person you can only describe as a stereotypical ninja approaches you with sword drawn.)"
+        "(You quickly put your weapon away, back up and sheathe it and apologize profusely to the lady and wander away from the body you just left in the street.)"
+        "(After panic walking away from the murder you just committed. You find another vender and ask about a nearby inn. She seems to understand and points you in the direction of an Inn)"
+        "(You thank her and start walking towards the Inn, as you walk you begin to feel light-headed and blackout again.)" 
+    ]
+    wwii_text_lines = [
+        "(You awake and look around, you notice a city-scape bombed to a point it resembled rubble more than a city.)"
+        "Halt! You there!"
+        "(You stop and slowly turn around)"
+        "(You are face to face with a Nazi soldier, obviously there isn't much to say at this point, you look to your right and find a discarded rifle, pick it up and point)"
+    ]
+    modern_times_text_lines = [
+        "(Well, that one doesn't feel quite like murder as the previous ones."
+        "That was a pretty easy choice.)"
+        "(You begin to look around, you debate just laying down and waiting"
+        "(But you're just guessing at this point.)"
+        "Oh there's the sleepy."
+        "You fall asleep"
+        "(You awaken to the sound of cars and people talking)"
+        "(You look around and realize you're in a modern city)"
+        "Where am I now?"
+        "(You see a soldier patrolling the street)"
+        "Hey, you! Stop right there!"
+        "(You realize you're just a dude holding a bunch of weapons)"
+        "Somewhere in the middle of what appears to be the United Kingdom." 
+        "They don't like guns and obviously do not like you right now.)"
+    ]
+    mars_text_lines = [
+        "Well, guess I'm just a murderer now with some kind of berry monster helping me commit more crimes in various ages."
+        "(You begin to wander off attempting to hide somewhere not in the middle of the street. You find yourself wandering down an alley.)"
+        "(At the end of the alley, a bright light suddenly bursts out of the wall. It resembles a portal that you would see in Star Trek or something else sci-fi.)"
+        "Well guess I really don't have much to lose now."
+        "(You reload your rifle, take a look around and walk through the portal.)"
+    ]
 
     # Game variables
     current_scene = "main_menu"
@@ -136,89 +192,187 @@ def start_game():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_DOWN:  
-                    selected_option = (selected_option + 1) % len(menu_options)
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_DOWN:
                     selected_action = (selected_action + 1) % len(battle_actions)
-                elif event.key == pygame.K_UP:  
-                    selected_option = (selected_option - 1) % len(menu_options)
+                elif event.key == pygame.K_UP:
                     selected_action = (selected_action - 1) % len(battle_actions)
-                elif event.key == pygame.K_RETURN:  
-                    if selected_option == 0:  
-                        current_scene = "intro"
-                    elif selected_option == 1:  
-                        running = False
-                elif event.key == pygame.K_SPACE and current_scene == "battle":
+                elif event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
                     handle_battle_action()
 
         # 2. Update game state
         if current_scene == "intro":
-            if intro_text.y == 0:  
-                intro_music.play(-1)
-            intro_text.update()
-            if intro_text.y == 0:
-                current_scene = "stone_age"
-                intro_music.stop()
+            intro_screen()
         elif current_scene == "stone_age":
-            if stone_age_text.y == 0:  
-                stone_age_music.play(-1)
-            stone_age_text.update()
-            if stone_age_text.y == 0:
-                player = PlayerCharacter("You", 100, 10)
-                enemy = Caveman()
+            stone_age_screen()
+        elif current_scene == "medieval_time":
+            medieval_time_screen()
+        elif current_scene == "red_district":
+            red_district_screen()
+        elif current_scene == "wwii":
+            wwii_screen()
+        elif current_scene == "modern_times":
+            modern_times_screen()
+        elif current_scene == "mars":
+            mars_screen()
+        if current_scene in ["stone_age", "medieval_time", "red_district", "wwii", "modern_times", "mars"]:
+            if enemy is None or enemy.hp <= 0:
+                enemy = choose_enemy(current_scene)
                 battle_turn = "player"
-                start_battle()
-                current_scene = "battle"
-                stone_age_music.stop()
-                battle_music.play(-1)
-        elif current_scene == "battle":
-            if player is None:
-                player = PlayerCharacter("You", 100, 10)
-            update_battle_state()
-            check_battle_end()
 
         # 3. Render
         screen.fill((0, 0, 0))  # Clear the screen with a black background
 
-        if current_scene == "main_menu":
-            screen.blit(main_menu_image, (0, 0))
-            for i, option in enumerate(menu_options):
-                text_surface = font.render(option, True, text_color)
-                text_rect = text_surface.get_rect(center=(screen_width // 2, screen_height // 2 + i * 50))
-                if i == selected_option:  
-                    pygame.draw.rect(screen, (255, 0, 0), text_rect.inflate(20, 10))  
-                screen.blit(text_surface, text_rect)
-        elif current_scene == "intro":
-            screen.blit(intro_image, (0, 0))
-            intro_text.draw(screen)
-        elif current_scene == "stone_age":
-            screen.blit(stone_age_bg, (0, 0))
-            stone_age_text.draw(screen)
-        elif current_scene == "battle":
+        if enemy is not None:
             render_battle_screen(screen, font, text_color, player, enemy, battle_turn, battle_actions, selected_action)
-        elif current_scene == "game_over":
-            screen.fill((0, 0, 0))
-            if player.hp > 0:
-                game_over_text = font.render("You defeated the enemy! Congratulations!", True, text_color)
-            else:
-                game_over_text = font.render("The enemy defeated you. Game over.", True, text_color)
-            screen.blit(game_over_text, (50, screen_height // 2))
 
         pygame.display.flip()
         clock.tick(60)
 
     pygame.quit()
 
-def start_battle():
-    global player, enemy, battle_active
-    if player is None:
-        player = PlayerCharacter("You", 100, 10)
-    enemy = choose_enemy()
-    battle_active = True
+def choose_enemy(current_scene):
+    if current_scene == "stone_age":
+        return Caveman()
+    elif current_scene == "medieval_time":
+        return Knight()
+    elif current_scene == "red_district":
+        return Ninja()
+    elif current_scene == "wwii":
+        return Nazi_Soldier()
+    elif current_scene == "modern_times":
+        return British_Soldier()
+    elif current_scene == "mars":
+        return Alien()
+    else:
+        raise ValueError("Invalid scene for enemy selection")
 
-def choose_enemy():
-    enemies = [Caveman(), Knight(), Ninja(), British_Soldier(), Nazi_Soldier(), Alien()]
-    return random.choice(enemies)
+def intro_screen():
+    global current_scene
+    screen.fill((0, 0, 0))
+    intro_text = ScrollingText('\n'.join(text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                return
+        intro_text.update()
+        screen.fill((0, 0, 0))
+        intro_text.draw(screen)
+        pygame.display.flip()
+        clock.tick(60)
+    current_scene = "stone_age"
+
+def stone_age_screen():
+    global current_scene, player, enemy
+    screen.fill((0, 0, 0))
+    stone_age_text = ScrollingText('\n'.join(stone_age_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                return
+        stone_age_text.update()
+        screen.fill((0, 0, 0))
+        stone_age_text.draw(screen)
+        pygame.display.flip()
+        clock.tick(60)
+    enemy = Caveman()
+
+def medieval_time_screen():
+    global current_scene, player, enemy
+    screen.fill((0, 0, 0))
+    medieval_time_text = ScrollingText('\n'.join(medieval_time_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                return
+        medieval_time_text.update()
+        screen.fill((0, 0, 0))
+        medieval_time_text.draw(screen)
+        pygame.display.flip()
+        clock.tick(60)
+    enemy = Knight()
+
+def red_district_screen():
+    global current_scene, player, enemy
+    screen.fill((0, 0, 0))
+    red_district_text = ScrollingText('\n'.join(reddistrict_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                return
+        red_district_text.update()
+        screen.fill((0, 0, 0))
+        red_district_text.draw(screen)
+        pygame.display.flip()
+        clock.tick(60)
+    enemy = Ninja()
+
+def wwii_screen():
+    global current_scene, player, enemy
+    screen.fill((0, 0, 0))
+    wwii_text = ScrollingText('\n'.join(wwii_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                return
+        wwii_text.update()
+        screen.fill((0, 0, 0))
+        wwii_text.draw(screen)
+        pygame.display.flip()
+        clock.tick(60)
+    enemy = Nazi_Soldier()
+
+def modern_times_screen():
+    global current_scene, player, enemy
+    screen.fill((0, 0, 0))
+    modern_times_text = ScrollingText('\n'.join(modern_times_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                return
+        modern_times_text.update()
+        screen.fill((0, 0, 0))
+        modern_times_text.draw(screen)
+        pygame.display.flip()
+        clock.tick(60)
+    enemy = British_Soldier()
+
+def mars_screen():
+    global current_scene, player, enemy
+    screen.fill((0, 0, 0))
+    mars_text = ScrollingText('\n'.join(mars_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                return
+        mars_text.update()
+        screen.fill((0, 0, 0))
+        mars_text.draw(screen)
+        pygame.display.flip()
+        clock.tick(60)
+    enemy = Alien()
+
 
 def handle_battle_action():
     global battle_turn, current_scene, selected_action
@@ -228,173 +382,35 @@ def handle_battle_action():
         elif selected_action == 1:
             if random.random() < player.special["Luck"] * 0.1:
                 print("You successfully escaped!")
-                current_scene = "stone_age"
-                return
+                next_scene()
             else:
                 print("You failed to escape!")
         elif selected_action == 2:
             if random.random() < player.special["Perception"] * 0.05:
                 print("You successfully reasoned with the enemy!")
-                current_scene = "stone_age"
-                return
+                next_scene()
             else:
                 print(f"The {enemy.name} doesn't understand you.")
         elif selected_action == 3:
             print("You do nothing.")
         battle_turn = "enemy"
 
-def update_battle_state():
-    global battle_turn, player, enemy
-    if battle_turn == "enemy":
-        enemy.attack(player)
-        battle_turn = "player"
+def next_scene():
+    global current_scene
+    if current_scene == "stone_age" and enemy.name == "Caveman":
+        current_scene = "medieval_time"
+    elif current_scene == "medieval_time" and enemy.name == "Knight":
+        current_scene = "red_district"
+    elif current_scene == "red_district" and enemy.name == "Ninja":
+        current_scene = "wwii"
+    elif current_scene == "wwii" and enemy.name == "Nazi Soldier":
+        current_scene = "modern_times"
+    elif current_scene == "modern_times" and enemy.name == "British Soldier":
+        current_scene = "mars"
+    elif current_scene == "mars" and enemy.name == "Alien":
+        # Game won!
+        pass  # Implement victory screen here
 
-def check_battle_end():
-    global battle_active, current_scene
-    if player.hp <= 0:
-        print("You were defeated! Game over.")
-        battle_active = False
-        current_scene = "game_over"
-    elif enemy.hp <= 0:
-        print(f"You defeated the {enemy.name}!")
-        battle_active = False
-        current_scene = "stone_age"
 
 if __name__ == "__main__":
     start_game()
-
-
-#     def Travel_CastleCamelot():
-#         print("(Your head is pounding and your arms and legs are aching)");
-#         #time.sleep(3);
-#         print("Damn it...(You hold your head in your hands)");
-#         #time.sleep(3);
-#         print("(As you lay in pain from the unexpected battle, the sound of metal clanging together gets louder and louder)")
-#         time.sleep(5);
-#         print("HARK!! Who goes there?!");
-#         #time.sleep(2);
-#         print("(You hurriedly stand up and adrenaline courses through you're veins. As you look around, you notice your in some medeival era)");
-#         time.sleep(5);
-#         print("Please, not again");
-
-#         player = PlayerCharacter("You", 110, 15)
-#         battle_knight(player)
-#         #time.sleep(3);
-
-#     def Travel_RedDistrict():
-#         #time.sleep(2);
-#         print("WHY IS THIS HAPPENING TO ME?!");
-#         #time.sleep(2);
-#         print("(You start trembling with anger and feelings of helplessness...)");
-#         #time.sleep(3);
-#         print("Where am I now?!");
-#         #time.sleep(2);
-#         print("(YOu hear a commotion to your left and see  Geisha in the midst of a crowd walking , almost like a parade)");
-#         #time.sleep(3);
-#         print("(The lights start turning on and the sun is setting, you realize it's getting dark out)");
-#         #time.sleep(2);
-#         print("Crap, gotta find somewhere to sleep");
-#         #time.sleep(2);
-#         print("(You wonder the district and see food vendors and the area becoming livelier)");
-#         time.sleep(4);
-#         print("(You're stomach still hurts from that pie you ate. But you feel an insatuated hunger)");
-#         time.sleep(5);
-#         print("Can I get some food please?(You ask a vendor, she clearly doesn't understand you)");
-#         #time.sleep(3);
-#         print("Well damn...");
-#         #time.sleep(2);
-#         print("Well maybe if I...(You start to rummage your pockets and pull out your wallet. The vendor starts to panic)");
-#         time.sleep(6);
-#         print("(You gaze to see what she's fretting about. As you try to see where your gaze ends, you realize it's the weapons you've collected along the way. )");
-#         #time.sleep(3);
-#         print("(You're shocked, and start explaining that you mean no harm, but fail)");
-#         time.sleep(4);
-#         print("(Some person you can only describe as a stereotypical ninja approaches you with sword drawn.)")
-
-#         player = PlayerCharacter("You", 115, 20)
-#         battle_ninja(player)
-
-#         print("(You quickly put your weapon away, back up and sheathe it and apologize profusely to the lady and wander away from the body you just left in the street.)");
-#         #time.sleep(3);
-#         print("(After panic walking away from the murder you just commited. You find another vender and ask about a nearby inn. She seems to understand and points you in the direction of an Inn)");
-#         #time.sleep(3);
-#         print("(You thank her and start walking towards the Inn, as you walk you begin to feel light-headed and blackout again.)"); 
-#         time.sleep(4);
-
-#         Travel_Lexington
-
-#     def Travel_Lexington():
-#         print("(You awake and look around, you notice a city-scape bombed to a point it resembled rubble more than a city.)");
-#         #time.sleep(3);
-#         print("Halt! You there!");
-#         #time.sleep(2);
-#         print("(You stop and slowly turn around)");
-#         #time.sleep(2);
-#         print("(You are face to face with a Nazi soldier, obviously there isn't much to say at this point, you look to your right and find a discarded rifle, pick it up and point)");
-
-#         player = PlayerCharacter("You", 120, 25)
-#         battle_nazi(player)
-
-#         print("(Well, that one doesn't feel as bad as the previous ones. That was a choice.)");
-#         #time.sleep(2);
-#         print("(You begin to look around, you debate just laying down and waiting for the next one to happen. You're just guessing at this point.)");
-#         #time.sleep(2);
-#         print("(You lay down to go to sleep)");
-#         #time.sleep(3);
-#         print("(You start to feel light headed)");
-#         #time.sleep(2);
-#         print("Here we go again...");
-#         #time.sleep(2);
-
-#     def Travel_WW2():
-#         print("(You awaken to the sound of cars and people talking)");
-#         #time.sleep(3);
-#         print("(You look around and realize you're in a modern city)");
-#         #time.sleep(2);
-#         print("Where am I now?");
-#         #time.sleep(2);
-#         print("(You see a soldier patrolling the street)");
-#         #time.sleep(2);
-#         print("Hey, you! Stop right there!");
-#         #time.sleep(3)
-#         print("(You realize you're just a dude holding a bunch of weapons in the middle of what appears to be the United Kingdom. They don't like guns and obviously do not like you right now.)")
-
-#         player = PlayerCharacter("You", 125, 30)
-#         battle_british_soldier(player)
-
-#         print("Well, guess I'm just a murderer now with some kind of berry monster helping me commit more crimes in various ages.");
-#         #time.sleep(3);
-#         print("(You begin to wander off attempting to hide somewhere not in the middle of the street. You find yourself wandering down an alley.)");
-#         #time.sleep(3);
-#         print("(At the end of the alley, a bright light suddenly bursts out of the wall. It resembles a portal that you would see in Star Trek or something else sci-fi.)");
-#         #time.sleep(3);
-#         print("Well guess I really don't have much to lose now.");
-#         #time.sleep(3);
-#         print("(You reload your rifle, take a look around and walk through the portal.)");
-
-#     def Travel_AlienWorld():
-#         print("(You step through the portal and find yourself on an alien planet)");
-#         #time.sleep(3);
-#         print("(The landscape is strange and unfamiliar)");
-#         #time.sleep(2);
-#         print("(You see an Alien approaching)");
-#         #time.sleep(2);
-
-#         player = PlayerCharacter("You", 130, 35)
-#         battle_alien(player)
-
-#         # ... (Ending sequence thats super cool with blood and victory)
-
-
-#     # Call the travel functions
-#     #Travel_StoneAge()
-#     Travel_CastleCamelot()
-#     Travel_RedDistrict()
-#     Travel_Lexington()
-#     Travel_WW2()
-#     Travel_AlienWorld()
-
-# pygame.quit()
-
-# if __name__ == "__main__":
-#     start_game()
