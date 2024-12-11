@@ -72,6 +72,9 @@ def load_scene(scene_name, screen, font, text_color, screen_width, screen_height
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    return
 
         scrolling_text.update()
         
@@ -86,7 +89,7 @@ def load_scene(scene_name, screen, font, text_color, screen_width, screen_height
         if scrolling_text.is_finished():
             scrolling_text.y = screen_height
             return
-        
+
 def choose_enemy(current_scene):
     if current_scene == "stone_age":
         return Caveman()
@@ -152,8 +155,6 @@ def stone_age_screen(screen, font, text_color, player, enemy, clock):
         pygame.display.flip()
         clock.tick(60)
 
-    # Battle ended, move to the next scene
-    next_scene()
 
 def medieval_time_screen(screen, font, text_color, screen_width, screen_height, clock, medieval_time_text_lines):
     global current_scene
@@ -511,14 +512,13 @@ def start_game():
 
         # 2. Update game state
         if current_scene == "main_menu":
-            next_scene = main_menu_screen(screen, font, text_color, screen_width, screen_height, clock, main_menu_image, menu_options, selected_option)
-            if next_scene:
-                current_scene = next_scene
+            next_scene_name = main_menu_screen(screen, font, text_color, screen_width, screen_height, clock, main_menu_image, menu_options, selected_option)
+            if next_scene_name:
+                current_scene = next_scene_name
         elif current_scene in scenes:
             load_scene(current_scene, screen, font, text_color, screen_width, screen_height, clock, **scenes[current_scene])
             if current_scene == "stone_age":
                 enemy = Caveman()
-                stone_age_screen(screen, font, text_color, player, enemy, clock)
             elif current_scene == "medieval_time":
                 enemy = Knight()
             elif current_scene == "reddistrict":
