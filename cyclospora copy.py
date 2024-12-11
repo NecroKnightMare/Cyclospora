@@ -1,7 +1,6 @@
 
 import random
 import time
-from PIL import Image
 from battle.battle import start_battle, render_battle_screen
 from characters.creature import PlayerCharacter, Creature
 from characters.npc import Caveman, Knight, Ninja, British_Soldier, Nazi_Soldier, Alien
@@ -58,6 +57,13 @@ def start_game():
     pygame.display.set_caption("Cyclospora")
 
     clock = pygame.time.Clock()
+    
+    rect_x = 0
+    rect_y = 0
+    rect_speed_x = 2
+    rect_speed_y = 2
+    rect_width = 50
+    rect_height = 50
 
     font = pygame.font.Font(None, 36)
     text_color = (255, 255, 255)
@@ -71,7 +77,7 @@ def start_game():
     medieval_time_bg = pygame.image.load("images/CastleBridge.jpg").convert()
     red_district_bg = pygame.image.load("images/RedDistrict.jpg").convert()
     Lexington_bg = pygame.image.load("images/Lexington.jpg").convert()
-    WWII-bg = pygame.image.load("images/WWII-bg.jpg").convert()
+    WWII_bg = pygame.image.load("images/WWII-bg.jpg").convert()
     Alien = pygame.image.load("images/Alien.jpg").convert()
     AlienPlot = pygame.image.load("images/AlienPlot.jpg").convert()
 
@@ -81,7 +87,7 @@ def start_game():
     medieval_time_bg = pygame.transform.scale(medieval_time_bg, (screen_width, screen_height))
     red_district_bg = pygame.transform.scale(red_district_bg, (screen_width, screen_height))
     Lexington_bg = pygame.transform.scale(Lexington_bg, (screen_width, screen_height))
-    WWII-bg = pygame.transform.scale(WWII-bg, (screen_width, screen_height))
+    WWII_bg = pygame.transform.scale(WWII_bg, (screen_width, screen_height))
     Alien = pygame.transform.scale(Alien, (screen_width, screen_height))
     AlienPlot = pygame.transform.scale(AlienPlot, (screen_width, screen_height))
 
@@ -156,14 +162,14 @@ def start_game():
         'WHY IS THIS HAPPENING TO ME?!',
         "(You start trembling with anger and feelings of helplessness...)",
         "Where am I now?!",
-        "(YOu hear a commotion to your left and see  Geisha in the midst of a crowd walking , almost like a parade)",
+        "(You hear a commotion to your left and see  Geisha in the midst of a crowd walking , almost like a parade)",
         "(The lights start turning on and the sun is setting, you realize it's getting dark out)",
         "'Crap, gotta find somewhere to sleep'",
         "(You wonder the district and see food vendors and the area becoming livelier)",
         "(You're stomach still hurts from that pie you ate. But you feel an insatuated hunger)",
         "'Can I get some food please?'(You ask a vendor, she clearly doesn't understand you)",
         "'Well damn...'",
-        "'Well maybe if I...',
+        "'Well maybe if I...',"
        "(You start to rummage your pockets and pull out your wallet. The vendor starts to panic)",
         "(You gaze to see what she's fretting about. As you try to see where your gaze ends, you realize it's the weapons you've collected along the way. )",
         "(You're shocked, and start explaining that you mean no harm, but fail)",
@@ -198,7 +204,7 @@ def start_game():
         'What is going on?!',
         "Alien: 'Do not attempt to resist. Your kind has brought this upon yourselves. In the future, humans initiated a genocide against my people. I lost my arms in that war. Now, you will pay for your crimes.'",
         "(You feel a surge of panic but try to think of a way out.)",
-        'Genocide? I... I had no idea. There must be another way. I can help you without... without this.'"),
+        'Genocide? I... I had no idea. There must be another way. I can help you without... without this.'"),"
         "(The Alien's eyes narrow, filled with anger and pain.)",
         "Alien: 'Help?! You are the one that needs help! Aren't You wondering about the pain and circumstances that you are experiencing?'",
         "(The alien laughs)",
@@ -285,7 +291,7 @@ def start_game():
         rect_x += rect_speed_x
         rect_y += rect_speed_y
 
-        # Bounce the rectangle off the edges
+        # # Bounce the rectangle off the edges
         if rect_x < 0 or rect_x + rect_width > screen_width:
             rect_speed_x = -rect_speed_x
         if rect_y < 0 or rect_y + rect_height > screen_height:
