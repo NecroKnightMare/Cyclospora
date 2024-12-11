@@ -105,7 +105,7 @@ class British_Soldier(NPC):
 
 class Nazi_Soldier(NPC):
         """
-        Represents a Caveman, a primitive and hostile human.
+        Represents a Nazi Soldier, a primitive and hostile human.
         """
 
         def __init__(self, name="Nazi Soldier", hp=50, ac=15):
@@ -144,19 +144,3 @@ class Alien(NPC):
                 print(f"{self.name} shoots a raygun blast at {target.name}!")
             else:  # Otherwise, use Plasma sword for melee attack
                 super().attack(target, Weapon("Plasma sword", "melee", 15))
-
-def health_roll(self, boost_amount, debuff_amount):
-        """
-        50/50 chance to apply a health boost or debuff.
-
-        :param boost_amount: Amount to increase health on a boost.
-        :param debuff_amount: Amount to decrease health on a debuff.
-        """
-         
-        if random.choice([True, False]):
-            self.hp += boost_amount
-            print(f"{self.name}'s health increased by {boost_amount}. Current Health: {self.hp}")
-        else:
-            self.hp -= debuff_amount
-            self.hp = max(0, self.hp)
-            print(f"{self.name}'s health decreased by {debuff_amount}. Current Health: {self.hp}")

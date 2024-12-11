@@ -2,8 +2,11 @@ import random
 from items.weapon import club, sword, m16, ray_gun  # Import the ray gun
 from characters.player import PlayerCharacter
 from characters.npc import Alien
+
+from characters.npc import health_roll
 from decorators import game_over_check
 import pygame
+
 
 
 @game_over_check
@@ -15,6 +18,7 @@ def battle_alien(player):
     and harsher consequences.
     """
     enemy = Alien()
+    health_roll()
 
     while player.hp > 0 and enemy.hp > 0:
         # Player's turn
