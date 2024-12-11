@@ -1,6 +1,5 @@
 import pygame
 import random
-from characters.creature import PlayerCharacter, Creature
 
 
 def start_battle(player, enemy):
@@ -43,23 +42,30 @@ def handle_player_turn(player, enemy, selected_action):
     
     return True
 
-def handle_enemy_turn(player, enemy):
-    enemy.attack(player)
+def handle_enemy_turn(player, enemy, battle_log):
+        damage = random.randint(enemy.weapon["Damage"][0], enemy.weapon["Damage"][1])
+        battle_log.append(f"{enemy.name} attacks Player with {enemy.weapon['Name']} for {damage} damage!")
 
-def check_battle_end(player, enemy):
+def check_battle_end(player, enemy, battle_log):
     if player.hp <= 0:
-        print("You were defeated! Game over.")
+        battle_log.append("You were defeated! Game over.")
         return False
     elif enemy.hp <= 0:
-        print(f"You defeated the {enemy.name}!")
+        battle_log.append(f"You defeated the {enemy.name}!")
         return False
     return True
 
-def render_battle_screen(screen, font, text_color, player, enemy, battle_turn, battle_actions, selected_action):
+def render_battle_screen(screen, font, text_color, player, enemy, battle_turn, battle_actions, selected_action, battle_log):
     if player is None or enemy is None:
         print("Error: Player or enemy is None")
         return
-    screen.fill((0, 0, 0))
+    pygame.draw.rect(screen, (0, 0, 0), (50, 400, 700, 200))
+    # Display battle log
+    log_y = 400  # Adjust the starting y-position as needed
+    for message in battle_log:
+        log_text = font.render(message, True, text_color)
+        screen.blit(log_text, (50, log_y))
+        log_y += log_text.get_height() + 5
     
     # Draw player health bar
     pygame.draw.rect(screen, (255, 0, 0), (50, 50, 200, 20))  # Background

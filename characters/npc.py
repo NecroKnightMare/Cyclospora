@@ -29,14 +29,19 @@ class Caveman(NPC):
             Initializes a Caveman instance.
             """
             super().__init__(name, hp, ac)
+            super().__init__("Caveman", 30, 5)  # You can adjust health and AC as needed
+            self.weapon = {  # weapon is now a dictionary
+            "Name": "Club",
+            "Damage": (6, 10),
+        }
 
-        def attack(self, target):
+        def attack(self, target, battle_log):
             """
             Cavemen have a chance to throw rocks for ranged damage.
             """
             if random.random() < 0.5:  # 50% chance to throw a rock
                 super().attack(target, Weapon("Rock", "ranged", 8, range=3, accuracy=0.6))
-                print(f"{self.name} throws a rock at {target.name}!")
+                battle_log.append(f"{self.name} throws a rock at {target.name}!")
             else:  # Otherwise, use club for melee attack
                 super().attack(target, Weapon("Club", "melee", 6))
 
@@ -50,14 +55,18 @@ class Knight(NPC):
             Initializes a Knight instance.
             """
             super().__init__(name, hp, ac)
+            self.weapon = {
+            "Name": "Longsword",
+            "Damage": (8, 12),  # Damage range
+        }
 
-        def attack(self, target):
+        def attack(self, target, battle_log):
             """
             Knights have a chance to sling stones for ranged damage.
             """
             if random.random() < 0.5:  # 50% chance to sling a stone
                 super().attack(target, Weapon("stone", "ranged", 5, range=4, accuracy=2))
-                print(f"{self.name} slings a stone at {target.name}!")
+                battle_log.append(f"{self.name} slings a stone at {target.name}!")
             else:  # Otherwise, use Longsword for melee attack
                 super().attack(target, Weapon("Longsword", "melee", 10))
 
@@ -71,14 +80,17 @@ class Ninja(NPC):
             Initializes a Ninja instance.
             """
             super().__init__(name, hp, ac)
-
-        def attack(self, target):
+            self.weapon = {
+            "Name": "Tanto",
+            "Damage": (8, 12)
+        }
+        def attack(self, target, battle_log):
             """
             Ninja have a chance to throw Shurikens for ranged damage.
             """
             if random.random() < 0.5:  # 50% chance to shoot a bow
                 super().attack(target, Weapon("Bow", "ranged", 6, range=5, accuracy=4))
-                print(f"{self.name} shoots their Bow at {target.name}!")
+                battle_log.append(f"{self.name} shoots their Bow at {target.name}!")
             else:  # Otherwise, use Tanto for melee attack
                 super().attack(target, Weapon("Tanto", "melee", 8))
 
@@ -92,14 +104,17 @@ class British_Soldier(NPC):
             Initializes a British Soldier instance.
             """
             super().__init__(name, hp, ac)
-
-        def attack(self, target):
+            self.weapon = {
+            "Name": "SA80",
+            "Damage": (8, 12)
+            }
+        def attack(self, target, battle_log):
             """
             British soldiers have a chance to shoot their musket for ranged damage.
             """
             if random.random() < 0.7:  # 70% chance to shoot rifle
                 super().attack(target, Weapon("SA80", "ranged", 9, range=25, accuracy=9))
-                print(f"{self.name} shoots at {target.name}!")
+                battle_log.append(f"{self.name} shoots at {target.name}!")
             else:  # Otherwise, use club for melee attack
                 super().attack(target, Weapon("Bayonett", "melee", 8))
 
@@ -113,14 +128,17 @@ class Nazi_Soldier(NPC):
             Initializes a Nazi Soldier instance.
             """
             super().__init__(name, hp, ac)
-
-        def attack(self, target):
+            self.weapon = {
+            "Name": "Luger",
+            "Damage": (8, 12)
+            }
+        def attack(self, target, battle_log):
             """
             NAzi Soldiers have a chance to shoot their pistol for ranged damage.
             """
             if random.random() < 0.5:  # 50% chance to shoot with their Luger
                 super().attack(target, Weapon("Luger ", "ranged", 8, range=7, accuracy=3.5))
-                print(f"{self.name} throws a rock at {target.name}!")
+                battle_log.append(f"{self.name} throws a rock at {target.name}!")
             else:  # Otherwise, use  for melee attack
                 super().attack(target, Weapon("Combat Knife", "melee", 7))
 
@@ -134,13 +152,17 @@ class Alien(NPC):
             Initializes an Alien instance.
             """
             super().__init__(name, hp, ac)
+            self.weapon = {
+            "Name": "Raygun",
+            "Damage": (10, 15)
+            }
 
-        def attack(self, target):
+        def attack(self, target, battle_log):
             """
             Aliens have a chance to shoot a raygun for ranged damage.
             """
             if random.random() < 0.5:  # 50% chance to shoot raygun
                 super().attack(target, Weapon("Raygun", "ranged", 8, range=10, accuracy=5))
-                print(f"{self.name} shoots a raygun blast at {target.name}!")
+                battle_log.append(f"{self.name} shoots a raygun blast at {target.name}!")
             else:  # Otherwise, use Plasma sword for melee attack
                 super().attack(target, Weapon("Plasma sword", "melee", 15))
