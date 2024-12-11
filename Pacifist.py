@@ -374,7 +374,7 @@ def PacifistPath():
         print("{player_name}: 'Oh my god....I'm back home'")
         time.sleep(6)
         print("(You start getting up, relieved. As you make your way to the bedroom door and into the hallway.)")
-        time.slep(8)
+        time.sleep(8)
         print("TV: 'In Other News, berries are the best balance to add to your diet....'")
         time.sleep(8)
         print("{player_name}: 'No thank you! No more berries for me!'")

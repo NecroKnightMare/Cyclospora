@@ -1,6 +1,7 @@
 
 import random
 import time
+from PIL import I,agge
 from battle.battle import start_battle, render_battle_screen
 from characters.creature import PlayerCharacter, Creature
 from characters.npc import Caveman, Knight, Ninja, British_Soldier, Nazi_Soldier, Alien
@@ -81,6 +82,8 @@ def start_game():
     Alien = pygame.transform.scale(Alien, (screen_width, screen_height))
     AlienPlot = pygame.transform.scale(AlienPlot, (screen_width, screen_height))
 
+
+
     # Load sounds
     intro_music = pygame.mixer.Sound("Ambience/ObservingTheStar.ogg")
     stone_age_music = pygame.mixer.Sound("Ambience/caveman-bg.ogg")
@@ -95,6 +98,15 @@ def start_game():
     WWII_music = pygame.mixer.Sound("Ambience/warzone.mp3")
     Soldier_music = pygame.mixer.Sound("images/Soldier.mp3")
     
+    # Load background music
+    pygame.mixer.music.load("Ambience/ObservingTheStar.ogg")
+    pygame.mixer.music.play(-1)
+
+    # # Game variables Ariel: Should this be before the lines?#### delete if not
+    # current_scene = "main_menu"
+    # player = None
+    # menu_options = ["Play", "Quit"]
+    # selected_option = 0
 
     # Text-related variables
     text_lines = [
@@ -139,14 +151,14 @@ def start_game():
         "(As you take a breathe in, you immediately start to feel sick)",
         "(You lean over to the side of a cobblestone ledge and vomit)",
         'That taste just as bad as it did when I ate that pie', 
-        "(Wiping off the sides of your mouth, clanging metal sounds come from the road south of your position),
+        "(Wiping off the sides of your mouth, clanging metal sounds come from the road south of your position)",
         "Knight: 'HARK!! Who Goes There?!'"
     ]
     reddistrict_text_lines = [
 
         'WHY IS THIS HAPPENING TO ME?!',
         "(You start trembling with anger and feelings of helplessness...)",
-        "'Where am I now?!'"),
+        "Where am I now?!",
         "(YOu hear a commotion to your left and see  Geisha in the midst of a crowd walking , almost like a parade)",
         "(The lights start turning on and the sun is setting, you realize it's getting dark out)",
         "'Crap, gotta find somewhere to sleep'"),
@@ -215,7 +227,7 @@ def start_game():
         "(CYCLOSPORA)"
     ]
 
-    # Game variables
+    # Game variables Ariel: Should this be before the lines?####
     current_scene = "main_menu"
     player = None
     menu_options = ["Play", "Quit"]
@@ -253,23 +265,24 @@ def start_game():
         if current_scene == "main_menu":
             main_menu_screen(screen, font, text_color, screen_width, screen_height, clock, main_menu_image, menu_options, selected_option)
         elif current_scene == "intro":
-            intro_screen()
+            intro_screen(screen, font, text_color, screen_width, screen_height, clock, main_menu_image, menu_options, selected_option)
         elif current_scene == "stone_age":
-            stone_age_screen()
+            stone_age_screen(screen, font, text_color, screen_width, screen_height, clock, main_menu_image, menu_options, selected_option)
         elif current_scene == "medieval_time":
-            medieval_time_screen()
+            medieval_time_screen(screen, font, text_color, screen_width, screen_height, clock, main_menu_image, menu_options, selected_option)
         elif current_scene == "red_district":
-            red_district_screen()
+            red_district_screen(screen, font, text_color, screen_width, screen_height, clock, main_menu_image, menu_options, selected_option)
         elif current_scene == "wwii":
-            wwii_screen()
+            wwii_screen(screen, font, text_color, screen_width, screen_height, clock, main_menu_image, menu_options, selected_option)
         elif current_scene == "modern_times":
-            modern_times_screen()
+            modern_times_screen(screen, font, text_color, screen_width, screen_height, clock, main_menu_image, menu_options, selected_option)
         elif current_scene == "mars":
-            mars_screen()
+            mars_screen(screen, font, text_color, screen_width, screen_height, clock, main_menu_image, menu_options, selected_option)
         if current_scene in ["stone_age", "medieval_time", "red_district", "wwii", "modern_times", "mars"]:
             if enemy is None or enemy.hp <= 0:
                 enemy = choose_enemy(current_scene)
                 battle_turn = "player"
+    #need outro screen
 
         # 3. Render
         screen.fill((0, 0, 0))  # Clear the screen with a black background
@@ -281,6 +294,8 @@ def start_game():
         clock.tick(60)
 
     pygame.quit()
+    #system exit
+    sys.exit()
 
 def choose_enemy(current_scene):
     if current_scene == "stone_age":
@@ -297,6 +312,8 @@ def choose_enemy(current_scene):
         return Alien()
     else:
         raise ValueError("Invalid scene for enemy selection")
+    
+    #needs main screen
 
 def intro_screen(screen, font, text_color, screen_width, screen_height, clock, text_lines):
     global current_scene
@@ -305,9 +322,10 @@ def intro_screen(screen, font, text_color, screen_width, screen_height, clock, t
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
+                pygame.quit() 
                 sys.exit()
             if event.type == pygame.KEYDOWN:
+                current_scene = "intro_screen"
                 return
         intro_text.update()
         screen.fill((0, 0, 0))
@@ -326,6 +344,7 @@ def stone_age_screen(screen, font, text_color, screen_width, screen_height, cloc
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
+                current_scene = "stone_age"
                 return
         stone_age_text.update()
         screen.fill((0, 0, 0))
@@ -344,6 +363,7 @@ def medieval_time_screen(screen, font, text_color, screen_width, screen_height, 
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
+                current_scene = "medieval_time"
                 return
         medieval_time_text.update()
         screen.fill((0, 0, 0))
@@ -362,6 +382,7 @@ def red_district_screen(screen, font, text_color, screen_width, screen_height, c
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
+                current_scene = "red_district"
                 return
         red_district_text.update()
         screen.fill((0, 0, 0))
@@ -380,6 +401,7 @@ def wwii_screen(screen, font, text_color, screen_width, screen_height, clock, ww
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
+                current_scene = "wwii"
                 return
         wwii_text.update()
         screen.fill((0, 0, 0))
@@ -398,6 +420,7 @@ def modern_times_screen(screen, font, text_color, screen_width, screen_height, c
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
+                current_scene = "modern_times"
                 return
         modern_times_text.update()
         screen.fill((0, 0, 0))
@@ -416,6 +439,7 @@ def mars_screen(screen, font, text_color, screen_width, screen_height, clock, ma
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
+                current_scene = "mars"
                 return
         mars_text.update()
         screen.fill((0, 0, 0))
