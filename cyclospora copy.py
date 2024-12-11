@@ -335,16 +335,36 @@ def start_game():
     stone_age_bg = pygame.image.load("images/caveman-bg.jpg").convert()
     battle_bg = pygame.Surface((screen_width, screen_height))
     battle_bg.fill((128, 128, 128))  # Gray background for battle scene
+    medieval_time_bg = pygame.image.load("images/CastleBridge.jpg").convert()
+    red_district_bg = pygame.image.load("images/RedDistrict.jpg").convert()
+    Lexington_bg = pygame.image.load("images/Lexington.jpg").convert()
+    WWII_bg = pygame.image.load("images/WWII-bg.jpg").convert()
+    Alien = pygame.image.load("images/Alien.jpg").convert()
+    AlienPlot = pygame.image.load("images/AlienPlot.jpg").convert()
 
     main_menu_image = pygame.transform.scale(main_menu_image, (screen_width, screen_height))
     intro_image = pygame.transform.scale(intro_image, (screen_width, screen_height))
     stone_age_bg = pygame.transform.scale(stone_age_bg, (screen_width, screen_height))
+    medieval_time_bg = pygame.transform.scale(medieval_time_bg, (screen_width, screen_height))
+    red_district_bg = pygame.transform.scale(red_district_bg, (screen_width, screen_height))
+    Lexington_bg = pygame.transform.scale(Lexington_bg, (screen_width, screen_height))
+    WWII_bg = pygame.transform.scale(WWII_bg, (screen_width, screen_height))
+    Alien = pygame.transform.scale(Alien, (screen_width, screen_height))
+    AlienPlot = pygame.transform.scale(AlienPlot, (screen_width, screen_height))
 
     # Load sounds
     intro_music = pygame.mixer.Sound("Ambience/ObservingTheStar.ogg")
     stone_age_music = pygame.mixer.Sound("Ambience/caveman-bg.ogg")
     battle_music = pygame.mixer.Sound("Ambience/ST_1_Fight(wave).wav")
     club_hit_sound = pygame.mixer.Sound('Sounds/CyclosporaSFX/Bonk Sound Effect.mp3')
+    castle_music = pygame.mixer.Sound("Ambience/Alert! Outsider!.mp3")
+    knight_music = pygame.mixer.Sound("Ambience/ST_1_Fight(mp3^320).mp3")
+    red_district_music = pygame.mixer.Sound("Ambience/Socapex - Tokyo Chase.mp3")
+    Ninja_music = pygame.mixer.Sound("Ambience/Theme of &#039;&#039;Ninja of A Great Sausage&#039;&#039;.ogg")
+    Lexington_music = pygame.mixer.Sound("Ambience/civil-war-fanfares.mp3")
+    Concord_soldier_music = pygame.mixer.Sound("Ambience/battle-march-action-loop.mp3")
+    WWII_music = pygame.mixer.Sound("Ambience/warzone.mp3")
+    Soldier_music = pygame.mixer.Sound("images/Soldier.mp3")
 
     # Scene Data
     scenes = {
@@ -403,7 +423,7 @@ def start_game():
     "Please, not again"
     ],
        "background": medieval_time_bg,
-            "music": medieval_time_music,
+            "music": castle_music,
             "enemy": "Knight"
     },
     "reddistrict": {
@@ -426,8 +446,8 @@ def start_game():
         "(After panic walking away from the murder you just committed. You find another vender and ask about a nearby inn. She seems to understand and points you in the direction of an Inn)"
         "(You thank her and start walking towards the Inn, as you walk you begin to feel light-headed and blackout again.)" 
     ],
-        "background": reddistrict_bg,
-            "music": reddistrict_music,
+        "background": red_district_bg,
+            "music": red_district_music,
             "enemy": "Ninja"
     },
     "wwii": {
@@ -437,8 +457,8 @@ def start_game():
         "(You stop and slowly turn around)"
         "(You are face to face with a Nazi soldier, obviously there isn't much to say at this point, you look to your right and find a discarded rifle, pick it up and point)"
     ],
-    "backround": wwii_bg,
-    "music": wwii_music,
+    "backround": WWII_bg,
+    "music": WWII_music,
     "enemy": "Nazi_soldier"
     },
     "modern_times": {
@@ -458,8 +478,8 @@ def start_game():
         "Somewhere in the middle of what appears to be the United Kingdom." 
         "They don't like guns and obviously do not like you right now.)"
     ],
-    "backround": modern_bg,
-    "music": modern_time_music,
+    "backround": Lexington_bg,
+    "music": Soldier_music,
     "enemy": "British_soldier"
     },
     "mars": {
@@ -470,7 +490,7 @@ def start_game():
         "Well guess I really don't have much to lose now."
         "(You reload your rifle, take a look around and walk through the portal.)"
     ],
-    "backround": modern_bg,
+    "backround": AlienPlot,
     "music": mars_music,
     "enemy": "Alien"
     }
