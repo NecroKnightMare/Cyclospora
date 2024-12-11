@@ -78,7 +78,7 @@ class Creature:
             int: The distance between the two creatures. (logic here)
         """
         # Placeholder- logic here which I dunno currently
-        return 5  # Assume a distance of 5 units currently until I can figure out the way to implement actual distance.
+        return 1  # Assume a distance of 5 units currently until I can figure out the way to implement actual distance.
 
 
 class PlayerCharacter(Creature):
