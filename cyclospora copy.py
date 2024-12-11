@@ -7,7 +7,7 @@ from characters.npc import Caveman, Knight, Ninja, British_Soldier, Nazi_Soldier
 import pygame
 import sys
 from main_menu import main_menu_screen
-from items.weapon import sword
+from items.weapon import sword, club
 
 class ScrollingText:
     def __init__(self, text, font, color, screen_width, screen_height, scroll_speed=1, line_spacing=50):
@@ -212,17 +212,17 @@ def start_game():
         elif current_scene == "intro":
             intro_screen(screen, font, text_color, screen_width, screen_height, clock, text_lines)
         elif current_scene == "stone_age":
-            stone_age_screen()
+            stone_age_screen(screen, font, text_color, screen_width, screen_height, clock, text_lines)
         elif current_scene == "medieval_time":
-            medieval_time_screen()
+            medieval_time_screen(screen, font, text_color, screen_width, screen_height, clock, text_lines)
         elif current_scene == "red_district":
-            red_district_screen()
+            red_district_screen(screen, font, text_color, screen_width, screen_height, clock, text_lines)
         elif current_scene == "wwii":
-            wwii_screen()
+            wwii_screen(screen, font, text_color, screen_width, screen_height, clock, text_lines)
         elif current_scene == "modern_times":
-            modern_times_screen()
+            modern_times_screen(screen, font, text_color, screen_width, screen_height, clock, text_lines)
         elif current_scene == "mars":
-            mars_screen()
+            mars_screen(screen, font, text_color, screen_width, screen_height, clock, text_lines)
         if current_scene in ["stone_age", "medieval_time", "red_district", "wwii", "modern_times", "mars"]:
             if enemy is None or enemy.hp <= 0:
                 enemy = choose_enemy(current_scene)
@@ -289,13 +289,16 @@ def stone_age_screen(screen, font, text_color, screen_width, screen_height, cloc
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
+                current_scene = "medieval_time"
                 return
         stone_age_text.update()
         screen.fill((0, 0, 0))
         stone_age_text.draw(screen)
         pygame.display.flip()
         clock.tick(60)
-    enemy = Caveman()
+        if stone_age_text.is_finished():
+            current_scene = "medieval_time"
+            return
 
 def medieval_time_screen(screen, font, text_color, screen_width, screen_height, clock, medieval_time_text_lines):
     global current_scene
@@ -313,7 +316,9 @@ def medieval_time_screen(screen, font, text_color, screen_width, screen_height, 
         medieval_time_text.draw(screen)
         pygame.display.flip()
         clock.tick(60)
-    enemy = Knight()
+        if medieval_time_text.is_finished():
+            current_scene = "red_district"
+            return
 
 def red_district_screen(screen, font, text_color, screen_width, screen_height, clock, reddistrict_text_lines):
     global current_scene, player, enemy
@@ -394,38 +399,52 @@ def handle_battle_action():
         print("No enemy to perform action on.")
         return
     if battle_turn == "player":
-        if selected_action == 0:
-            weapon = sword
-            player.attack(enemy, weapon)
-        elif selected_action == 1:
-            if random.random() < player.special["Luck"] * 0.1:
-                print("You successfully escaped!")
-                next_scene()
-            else:
-                print("You failed to escape!")
-        elif selected_action == 2:
-            if random.random() < player.special["Perception"] * 0.05:
-                print("You successfully reasoned with the enemy!")
-                next_scene()
-            else:
-                print(f"The {enemy.name} doesn't understand you.")
-        elif selected_action == 3:
-            print("You do nothing.")
-        battle_turn = "enemy"
+        # Handle player input for selecting actions
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_DOWN:
+                    selected_action = (selected_action + 1) % len(battle_actions)
+                elif event.key == pygame.K_UP:
+                    selected_action = (selected_action - 1) % len(battle_actions)
+                elif event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
+                    # Execute the selected action
+                    if selected_action == 0:
+                        weapon = club
+                        player.attack(enemy, weapon)
+                    elif selected_action == 1:
+                        if random.random() < player.special["Luck"] * 0.1:
+                            print("You successfully escaped!")
+                            next_scene()
+                        else:
+                            print("You failed to escape!")
+                    elif selected_action == 2:
+                        if random.random() < player.special["Perception"] * 0.05:
+                            print("You successfully reasoned with the enemy!")
+                            next_scene()
+                        else:
+                            print(f"The {enemy.name} doesn't understand you.")
+                    elif selected_action == 3:
+                        print("You do nothing.")
+                    battle_turn = "enemy"
+
+        # If it's the enemy's turn, handle the enemy's action
+        if battle_turn == "enemy":
+            handle_enemy_turn(player, enemy)
+            battle_turn = "player"
 
 def next_scene():
     global current_scene
-    if current_scene == "stone_age" and enemy.name == "Caveman":
+    if current_scene == "stone_age" and enemy.hp <= 0:
         current_scene = "medieval_time"
-    elif current_scene == "medieval_time" and enemy.name == "Knight":
+    elif current_scene == "medieval_time" and enemy.hp <= 0:
         current_scene = "red_district"
-    elif current_scene == "red_district" and enemy.name == "Ninja":
+    elif current_scene == "red_district" and enemy.hp <= 0:
         current_scene = "wwii"
-    elif current_scene == "wwii" and enemy.name == "Nazi Soldier":
+    elif current_scene == "wwii" and enemy.hp <= 0:
         current_scene = "modern_times"
-    elif current_scene == "modern_times" and enemy.name == "British Soldier":
+    elif current_scene == "modern_times" and enemy.hp <= 0:
         current_scene = "mars"
-    elif current_scene == "mars" and enemy.name == "Alien":
+    elif current_scene == "mars" and enemy.hp <= 0:
         # Game won!
         pass  # Implement victory screen here
 
