@@ -151,7 +151,7 @@ def start_game():
         "(As you take a breathe in, you immediately start to feel sick)",
         "(You lean over to the side of a cobblestone ledge and vomit)",
         'That taste just as bad as it did when I ate that pie', 
-        "(Wiping off the sides of your mouth, clanging metal sounds come from the road south of your position),
+        "(Wiping off the sides of your mouth, clanging metal sounds come from the road south of your position)",
         "Knight: 'HARK!! Who Goes There?!'"
     ]
     reddistrict_text_lines = [
