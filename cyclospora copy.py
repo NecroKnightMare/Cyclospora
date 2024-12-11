@@ -56,6 +56,8 @@ def start_game():
     screen = pygame.display.set_mode((screen_width, screen_height))
     pygame.display.set_caption("Cyclospora")
 
+    clock = pygame.time.Clock()
+
     font = pygame.font.Font(None, 36)
     text_color = (255, 255, 255)
 
@@ -101,12 +103,6 @@ def start_game():
     # Load background music
     pygame.mixer.music.load("Ambience/ObservingTheStar.ogg")
     pygame.mixer.music.play(-1)
-
-    # # Game variables Ariel: Should this be before the lines?#### delete if not
-    # current_scene = "main_menu"
-    # player = None
-    # menu_options = ["Play", "Quit"]
-    # selected_option = 0
 
     # Text-related variables
     text_lines = [
@@ -227,7 +223,7 @@ def start_game():
         "(CYCLOSPORA)"
     ]
 
-    # Game variables Ariel: Should this be before the lines?####
+    # Game variables
     current_scene = "main_menu"
     player = None
     menu_options = ["Play", "Quit"]
@@ -284,6 +280,17 @@ def start_game():
                 battle_turn = "player"
     #need outro screen
 
+        # Move the rectangle
+        rect_x += rect_speed_x
+        rect_y += rect_speed_y
+
+        # Bounce the rectangle off the edges
+        if rect_x < 0 or rect_x + rect_width > screen_width:
+            rect_speed_x = -rect_speed_x
+        if rect_y < 0 or rect_y + rect_height > screen_height:
+            rect_speed_y = -rect_speed_y
+
+        
         # 3. Render
         screen.fill((0, 0, 0))  # Clear the screen with a black background
 
