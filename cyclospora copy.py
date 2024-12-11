@@ -280,27 +280,40 @@ def start_game():
         # 2. Update game state
         if current_scene == "main_menu":
             next_scene = main_menu_screen(screen, font, text_color, screen_width, screen_height, clock, main_menu_image, menu_options, selected_option)
-            if next_scene:  # Check if a new scene was returned
+            if next_scene:
                 current_scene = next_scene
-        elif current_scene == "intro":
-            intro_screen(screen, font, text_color, screen_width, screen_height, clock, text_lines)
-        elif current_scene == "stone_age":
-            stone_age_screen(screen, font, text_color, screen_width, screen_height, clock, text_lines)
-        elif current_scene == "medieval_time":
-            medieval_time_screen(screen, font, text_color, screen_width, screen_height, clock, text_lines)
-        elif current_scene == "red_district":
-            red_district_screen(screen, font, text_color, screen_width, screen_height, clock, text_lines)
-        elif current_scene == "wwii":
-            wwii_screen(screen, font, text_color, screen_width, screen_height, clock, text_lines)
-        elif current_scene == "modern_times":
-            modern_times_screen(screen, font, text_color, screen_width, screen_height, clock, text_lines)
-        elif current_scene == "mars":
-            mars_screen(screen, font, text_color, screen_width, screen_height, clock, text_lines)
-        if current_scene in ["stone_age", "medieval_time", "red_district", "wwii", "modern_times", "mars"]:
-            if enemy is None or enemy.hp <= 0:
-                enemy = choose_enemy(current_scene)
+        elif current_scene in scenes:
+            load_scene(current_scene, screen, font, text_color, screen_width, screen_height, clock, **scenes[current_scene])
+            if scenes[current_scene]["enemy"]:
+                enemy = globals()[scenes[current_scene]["enemy"]]()
                 battle_music.play(-1)
                 battle_turn = "player"
+                # --- Battle Logic ---
+                while enemy.hp > 0:  # Battle loop
+                    for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            pygame.quit()
+                            sys.exit()
+                        elif event.type == pygame.KEYDOWN:
+                            if event.key == pygame.K_DOWN:
+                                selected_action = (selected_action + 1) % len(battle_actions)
+                            elif event.key == pygame.K_UP:
+                                selected_action = (selected_action - 1) % len(battle_actions)
+                            elif event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
+                                execute_battle_action(selected_action)
+
+                    # Render the battle screen
+                    render_battle_screen(screen, font, text_color, player, enemy, battle_turn, battle_actions, selected_action)
+
+                    if battle_turn == "enemy":
+                        handle_enemy_turn(player, enemy)
+                        battle_turn = "player"
+
+                    pygame.display.flip()
+                    clock.tick(60)
+
+                # Battle ended, move to the next scene
+                next_scene()
 
         # 3. Render
         screen.fill((0, 0, 0))  # Clear the screen with a black background
