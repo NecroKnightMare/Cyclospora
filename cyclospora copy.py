@@ -63,7 +63,7 @@ def load_scene(scene_name, screen, font, text_color, screen_width, screen_height
         text_color,
         screen_width,
         screen_height,
-        scroll_speed=1,
+        scroll_speed=2,
         line_spacing=180
     )
 
@@ -77,6 +77,7 @@ def load_scene(scene_name, screen, font, text_color, screen_width, screen_height
                 return
 
         scrolling_text.update()
+        
         if background:
             screen.blit(background, (0, 0))  # Use the provided background image
         else:
@@ -86,6 +87,7 @@ def load_scene(scene_name, screen, font, text_color, screen_width, screen_height
         clock.tick(60)
 
         if scrolling_text.is_finished():
+            scrolling_text.y = screen_height
             return
         
 def choose_enemy(current_scene):
@@ -394,7 +396,6 @@ def start_game():
     ],
             "background": intro_image,
             "music": intro_music,
-            "enemy": None
         },
     "stone_age": {
         "text_lines": [
@@ -411,7 +412,6 @@ def start_game():
     ],
         "background": stone_age_bg,
             "music": stone_age_music,
-            "enemy": "Caveman"
     },
     "medieval_time": {
        "text_lines": [
@@ -424,7 +424,6 @@ def start_game():
     ],
        "background": medieval_time_bg,
             "music": castle_music,
-            "enemy": "Knight"
     },
     "reddistrict": {
         "text_lines": [
@@ -448,7 +447,6 @@ def start_game():
     ],
         "background": red_district_bg,
             "music": red_district_music,
-            "enemy": "Ninja"
     },
     "wwii": {
     "text_lines": [
@@ -459,7 +457,6 @@ def start_game():
     ],
     "backround": WWII_bg,
     "music": WWII_music,
-    "enemy": "Nazi_soldier"
     },
     "modern_times": {
       "text_lines": [
@@ -480,7 +477,6 @@ def start_game():
     ],
     "backround": Lexington_bg,
     "music": Soldier_music,
-    "enemy": "British_soldier"
     },
     "mars": {
     "text_lines": [
@@ -491,8 +487,7 @@ def start_game():
         "(You reload your rifle, take a look around and walk through the portal.)"
     ],
     "backround": AlienPlot,
-    "music": mars_music,
-    "enemy": "Alien"
+    "music": battle_music,
     }
     }
 
@@ -533,10 +528,22 @@ def start_game():
                 current_scene = next_scene
         elif current_scene in scenes:
             load_scene(current_scene, screen, font, text_color, screen_width, screen_height, clock, **scenes[current_scene])
-            if scenes[current_scene]["enemy"]:
-                enemy = globals()[scenes[current_scene]["enemy"]]()
+            if current_scene == "stone_age":
+                enemy = Caveman()
+            elif current_scene == "medieval_time":
+                enemy = Knight()
+            elif current_scene == "reddistrict":
+                enemy = Ninja()
+            elif current_scene == "WWII":
+                enemy = Nazi_Soldier()
+            elif current_scene == "modern_times":
+                enemy = British_Soldier()
+            elif current_scene == "mars":
+                enemy = Alien()
+            if enemy is not None:  # Check if an enemy was made
                 battle_music.play(-1)
                 battle_turn = "player"
+
                 # --- Battle Logic ---
                 while enemy.hp > 0:  # Battle loop
                     for event in pygame.event.get():
@@ -563,6 +570,9 @@ def start_game():
 
                 # Battle ended, move to the next scene
                 next_scene()
+                enemy = None
+            elif current_scene == "intro":  # Check if it's the intro scene
+                current_scene = "stone_age"
 
         # 3. Render
         screen.fill((0, 0, 0))  # Clear the screen with a black background
