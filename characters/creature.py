@@ -16,6 +16,7 @@ class Creature:
         """
         self.name = name
         self.hp = hp
+        self.max_hp = hp
         self.ac = ac
 
     def take_damage(self, damage):
@@ -95,6 +96,7 @@ class PlayerCharacter(Creature):
             ac (int): The player character's armor class.
         """
         super().__init__(name, hp, ac)
+        self.max_hp = hp
         self.special = {  # S.P.E.C.I.A.L. stats, all 5 currently. Will implement some way to vary them eventually maybe.
             "Strength": 5,
             "Perception": 5,
