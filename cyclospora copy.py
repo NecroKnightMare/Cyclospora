@@ -1,7 +1,7 @@
 
 import random
 import time
-from PIL import I,agge
+from PIL import Image
 from battle.battle import start_battle, render_battle_screen
 from characters.creature import PlayerCharacter, Creature
 from characters.npc import Caveman, Knight, Ninja, British_Soldier, Nazi_Soldier, Alien
@@ -44,10 +44,11 @@ class ScrollingText:
             self.y = 0
 
     def draw(self, screen):
-        screen.blit(self.text_surface, (self.screen_width // 2 - self.text_surface.get_width() // 2, self.y))
+        # screen.blit(self.text_surface, (self.screen_width // 2 - self.text_surface.get_width() // 2, self.y))
+        for i, text_surface in enumerate(self.text_surfaces): surface.blit(text_surface, (10, self.y + i * self.line_spacing))
 
 def start_game():
-    global current_scene, player, enemy, battle_turn, selected_action, battle_actions, screen, font, text_color, screen_width, screen_height, clock
+    # global current_scene, player, enemy, battle_turn, selected_action, battle_actions, screen, font, text_color, screen_width, screen_height, clock
     pygame.init()
     pygame.mixer.init()
 
