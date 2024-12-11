@@ -331,8 +331,13 @@ def choose_enemy(current_scene):
 
 def intro_screen(screen, font, text_color, screen_width, screen_height, clock, text_lines):
     global current_scene
-    screen.fill((0, 0, 0))
+    # screen.fill((0, 0, 0))
     intro_text = ScrollingText('\n'.join(text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
+    
+    screen.blit(intro_image, (0, 0))
+    intro_music.play(-1)
+
+    
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -350,8 +355,13 @@ def intro_screen(screen, font, text_color, screen_width, screen_height, clock, t
 
 def stone_age_screen(screen, font, text_color, screen_width, screen_height, clock, stone_age_text_lines):
     global current_scene
-    screen.fill((0, 0, 0))
+    # screen.fill((0, 0, 0))
     stone_age_text = ScrollingText('\n'.join(stone_age_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
+    
+    screen.blit(stone_age_bg, (0, 0))
+    stone_age_music.play(-1)
+
+    
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -369,8 +379,12 @@ def stone_age_screen(screen, font, text_color, screen_width, screen_height, cloc
 
 def medieval_time_screen(screen, font, text_color, screen_width, screen_height, clock, medieval_time_text_lines):
     global current_scene
-    screen.fill((0, 0, 0))
+    # screen.fill((0, 0, 0))
     medieval_time_text = ScrollingText('\n'.join(medieval_time_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
+    
+    screen.blit(medieval_time_bg, (0, 0))
+    castle_music.play(-1)
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -388,8 +402,12 @@ def medieval_time_screen(screen, font, text_color, screen_width, screen_height, 
 
 def red_district_screen(screen, font, text_color, screen_width, screen_height, clock, reddistrict_text_lines):
     global current_scene, player, enemy
-    screen.fill((0, 0, 0))
+    # screen.fill((0, 0, 0))
     red_district_text = ScrollingText('\n'.join(reddistrict_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
+    
+    screen.blit(red_district_bg, (0, 0))
+    red_district_music.play(-1)
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -407,8 +425,12 @@ def red_district_screen(screen, font, text_color, screen_width, screen_height, c
 
 def wwii_screen(screen, font, text_color, screen_width, screen_height, clock, wwii_text_lines):
     global current_scene, player, enemy
-    screen.fill((0, 0, 0))
+    # screen.fill((0, 0, 0))
     wwii_text = ScrollingText('\n'.join(wwii_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
+    
+    screen.blit(wwii_bg (0, 0))
+    wwii_music.play(-1)
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -426,8 +448,12 @@ def wwii_screen(screen, font, text_color, screen_width, screen_height, clock, ww
 
 def modern_times_screen(screen, font, text_color, screen_width, screen_height, clock, modern_times_text_lines):
     global current_scene, player, enemy
-    screen.fill((0, 0, 0))
+    # screen.fill((0, 0, 0))
     modern_times_text = ScrollingText('\n'.join(modern_times_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
+    
+    screen.blit(Lexington_bg, (0, 0))
+    Lexington_music.play(-1)
+   
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -445,8 +471,12 @@ def modern_times_screen(screen, font, text_color, screen_width, screen_height, c
 
 def mars_screen(screen, font, text_color, screen_width, screen_height, clock, mars_text_lines):
     global current_scene, player, enemy
-    screen.fill((0, 0, 0))
+    # screen.fill((0, 0, 0))
     mars_text = ScrollingText('\n'.join(mars_text_lines), font, text_color, screen_width, screen_height, scroll_speed=1, line_spacing=180)
+    
+    screen.blit(AlienPlot_bg, (0, 0))
+    Mars_music.play(-1)
+    
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
