@@ -1,5 +1,6 @@
 from PIL import Image
 import random
+import pygame
 import time
 from battle.battle_caveman import battle_caveman
 from battle.battle_knight import battle_knight
@@ -7,7 +8,7 @@ from battle.battle_modern import battle_british_soldier
 from battle.battle_nazi import battle_nazi
 from battle.battle_ninja import battle_ninja
 from battle.battle_alien import battle_alien
-
+# from characters.creature import Creature
 from characters.player import PlayerCharacter, Player
 
 def start_game():
@@ -25,8 +26,8 @@ def start_game():
     # with image.open(filename) as image:
     #     width, height = image.size
 
-from characters.player import PlayerCharacter
-import pygame
+# from characters.player import PlayerCharacter
+# import pygame
 
 def start_game():
     pygame.init()
